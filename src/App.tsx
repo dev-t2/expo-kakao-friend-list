@@ -1,17 +1,24 @@
 import { memo } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Home from './screen/Home';
+import Login from './screen/Login';
+import NotFound from './screen/NotFound';
 
 const App = () => {
+  const isLoggedIn = false;
+
   return (
-    <div>
-      <Router>
-        <Switch>
-          <Route path="/" exact>
-            <h1>Home</h1>
-          </Route>
-        </Switch>
-      </Router>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/" exact>
+          {isLoggedIn ? <Home /> : <Login />}
+        </Route>
+
+        <Route>
+          <NotFound />
+        </Route>
+      </Switch>
+    </Router>
   );
 };
 
