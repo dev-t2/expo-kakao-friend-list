@@ -1,13 +1,11 @@
-import { FC, memo, useCallback } from 'react';
+import { memo, useCallback } from 'react';
 
-interface IHome {
-  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { isLoggedInVar } from '../apollo';
 
-const Home: FC<IHome> = ({ setIsLoggedIn }) => {
+const Home = () => {
   const onClick = useCallback(() => {
-    setIsLoggedIn(false);
-  }, [setIsLoggedIn]);
+    isLoggedInVar(false);
+  }, []);
 
   return (
     <>
