@@ -7,7 +7,7 @@ import { isDarkModeVar } from '../apollo';
 const StyledContainer = styled.div({});
 
 interface IStyledTitle {
-  state: Boolean;
+  state: boolean;
 }
 
 const StyledTitle = styled.h1<IStyledTitle>(({ theme, state }) => ({
