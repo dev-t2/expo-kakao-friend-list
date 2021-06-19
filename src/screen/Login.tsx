@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { memo, useCallback } from 'react';
 import styled from 'styled-components';
 
-import { isLoggedInVar } from '../apollo';
+import { isDarkModeVar } from '../apollo';
 
 const StyledContainer = styled.div({
   backgroundColor: 'tomato',
@@ -12,8 +12,9 @@ interface IStyledTitle {
   state: Boolean;
 }
 
-const StyledTitle = styled.h1<IStyledTitle>(({ state }) => ({
-  color: state ? 'palevioletred' : 'beige',
+const StyledTitle = styled.h1<IStyledTitle>(({ theme, state }) => ({
+  color: theme.fontColor,
+  backgroundColor: theme.bgColor,
   fontFamily: 'sans-serif',
 }));
 
@@ -28,15 +29,19 @@ const Login = () => {
     setState(prev => !prev);
   }, []);
 
-  const onClick = useCallback(() => {
-    isLoggedInVar(true);
-  }, []);
+  const onClick = useCallback(
+    (isDark: boolean) => () => {
+      isDarkModeVar(isDark);
+    },
+    []
+  );
 
   return (
     <StyledContainer>
       <StyledTitle state={state}>Login</StyledTitle>
       <StyledButton onClick={onToggle}>Toggle</StyledButton>
-      <button onClick={onClick}>Login</button>
+      <button onClick={onClick(true)}>Dark</button>
+      <button onClick={onClick(false)}>Light</button>
     </StyledContainer>
   );
 };
