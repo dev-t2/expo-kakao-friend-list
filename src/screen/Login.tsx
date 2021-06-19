@@ -4,9 +4,7 @@ import styled from 'styled-components';
 
 import { isDarkModeVar } from '../apollo';
 
-const StyledContainer = styled.div({
-  backgroundColor: 'tomato',
-});
+const StyledContainer = styled.div({});
 
 interface IStyledTitle {
   state: Boolean;
