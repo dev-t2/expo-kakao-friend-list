@@ -1,11 +1,11 @@
 import { memo } from 'react';
 import { useReactiveVar } from '@apollo/client';
 import { ThemeProvider } from 'styled-components';
-import { Reset } from 'styled-reset';
+import { Reset as StyledReset } from 'styled-reset';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { isDarkModeVar, isLoggedInVar } from './apollo';
-import { darkTheme, lightTheme } from './theme';
+import { darkTheme, GlobalStyle, lightTheme } from './style';
 import { Home, Login, NotFound } from './screen';
 
 const App = () => {
@@ -14,7 +14,8 @@ const App = () => {
 
   return (
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-      <Reset />
+      <StyledReset />
+      <GlobalStyle />
 
       <Router>
         <Switch>
