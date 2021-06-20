@@ -1,12 +1,28 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
+import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 
+import { PageTitle } from '../component/common';
 import { BottomLink, Button, Form, Input, Layout } from '../component/auth';
 import { SIGNUP } from '../route';
-import { PageTitle } from '../component/common';
+
+type FormData = {
+  email: string;
+  password: string;
+};
 
 const Login = () => {
+  const { register, handleSubmit } = useForm<FormData>();
+
+  const onValid = useCallback(data => {
+    console.log(data);
+  }, []);
+
+  const onInvalid = useCallback(data => {
+    console.log(data);
+  }, []);
+
   return (
     <Layout>
       <PageTitle title="Login" />
@@ -16,9 +32,19 @@ const Login = () => {
           <FontAwesomeIcon icon={faInstagram} size="3x" />
         </div>
 
-        <form>
-          <Input type="email" placeholder="이메일" />
-          <Input type="password" placeholder="비밀번호" />
+        <form onSubmit={handleSubmit(onValid, onInvalid)}>
+          <Input
+            {...register('email', { required: true })}
+            type="email"
+            name="email"
+            placeholder="이메일"
+          />
+          <Input
+            {...register('password', { required: true })}
+            type="password"
+            name="password"
+            placeholder="비밀번호"
+          />
           <Button type="submit">로그인</Button>
         </form>
       </Form>
