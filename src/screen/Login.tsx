@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { Link } from 'react-router-dom';
 
+import { SIGNUP } from '../route';
+
 const Container = styled.div({
   height: '100vh',
   display: 'flex',
@@ -98,7 +100,7 @@ const Login = () => {
 
         <BottomBox>
           <span>계정이 없으신가요?</span>
-          <StyledLink to="/signup">가입하기</StyledLink>
+          <StyledLink to={SIGNUP}>가입하기</StyledLink>
         </BottomBox>
       </BoxContainer>
     </Container>

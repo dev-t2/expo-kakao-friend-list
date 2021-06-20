@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { isDarkModeVar, isLoggedInVar } from './apollo';
 import { darkTheme, GlobalStyle, lightTheme } from './style';
+import { HOME, SIGNUP } from './route';
 import { Home, Login, NotFound, Signup } from './screen';
 
 const App = () => {
@@ -19,12 +20,12 @@ const App = () => {
 
       <Router>
         <Switch>
-          <Route path="/" exact>
+          <Route path={HOME} exact>
             {isLoggedIn ? <Home /> : <Login />}
           </Route>
 
           {!isLoggedIn && (
-            <Route path="/signup" exact>
+            <Route path={SIGNUP} exact>
               <Signup />
             </Route>
           )}
