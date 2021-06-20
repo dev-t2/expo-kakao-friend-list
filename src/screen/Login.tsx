@@ -4,17 +4,20 @@ import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 
 import { BottomLink, Button, Form, Input, Layout } from '../component/auth';
 import { SIGNUP } from '../route';
+import { PageTitle } from '../component/common';
 
 const Login = () => {
   return (
     <Layout>
+      <PageTitle title="Login" />
+
       <Form>
         <div>
           <FontAwesomeIcon icon={faInstagram} size="3x" />
         </div>
 
         <form>
-          <Input type="text" placeholder="이메일" />
+          <Input type="email" placeholder="이메일" />
           <Input type="password" placeholder="비밀번호" />
           <Button type="submit">로그인</Button>
         </form>

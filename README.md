@@ -8,3 +8,4 @@
 - Styled Reset: https://www.npmjs.com/package/styled-reset
 - React Font Awesome: https://fontawesome.com/v5.15/how-to-use/on-the-web/using-with/react
 - Google Fonts: https://fonts.google.com/
+- React Helmet Async: https://www.npmjs.com/package/react-helmet-async

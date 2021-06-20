@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import styled from 'styled-components';
 
-import { BoldLink } from '../component/common';
+import { BoldLink, PageTitle } from '../component/common';
 import { BottomLink, Button, Form, Input, Layout } from '../component/auth';
 import { HOME } from '../route';
 
@@ -21,6 +21,8 @@ const SubTitle = styled(BoldLink)({
 const Signup = () => {
   return (
     <Layout>
+      <PageTitle title="Signup" />
+
       <Form>
         <HeaderContainer>
           <FontAwesomeIcon icon={faInstagram} size="3x" />
