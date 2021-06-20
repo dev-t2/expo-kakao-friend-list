@@ -1,8 +1,14 @@
 import { createGlobalStyle, DefaultTheme } from 'styled-components';
 
-export const lightTheme: DefaultTheme = {};
+export const lightTheme: DefaultTheme = {
+  accent: '#0095f6',
+  borderColor: '#dbdbdb',
+};
 
-export const darkTheme: DefaultTheme = {};
+export const darkTheme: DefaultTheme = {
+  accent: '#0095f6',
+  borderColor: '#dbdbdb',
+};
 
 export const GlobalStyle = createGlobalStyle(({ theme }) => ({
   '*': {
@@ -12,6 +18,7 @@ export const GlobalStyle = createGlobalStyle(({ theme }) => ({
     backgroundColor: '#fafafa',
     fontSize: '14px',
     fontFamily: 'Noto Sans KR, sans-serif',
+    color: '#262626',
   },
   input: {
     all: 'unset',

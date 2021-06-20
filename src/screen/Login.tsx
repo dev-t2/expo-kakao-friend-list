@@ -2,6 +2,7 @@ import { memo } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div({
   height: '100vh',
@@ -15,10 +16,10 @@ const BoxContainer = styled.div({
   width: '100%',
 });
 
-const Box = styled.div({
+const Box = styled.div(({ theme }) => ({
   backgroundColor: 'white',
-  border: '1px solid #dbdbdb',
-});
+  border: `1px solid ${theme.borderColor}`,
+}));
 
 const TopBox = styled(Box)({
   display: 'flex',
@@ -38,24 +39,24 @@ const StyledForm = styled.form({
   marginTop: '30px',
 });
 
-const StyledInput = styled.input({
+const StyledInput = styled.input(({ theme }) => ({
   boxSizing: 'border-box',
   width: '100%',
   padding: '8px',
   backgroundColor: '#fafafa',
-  border: '0.5px solid #dbdbdb',
+  border: `0.5px solid ${theme.borderColor}`,
   borderRadius: '4px',
   marginBottom: '5px',
 
   '&::placeholder': {
     fontSize: '12px',
   },
-});
+}));
 
-const StyledButton = styled.button({
+const StyledButton = styled.button(({ theme }) => ({
   boxSizing: 'border-box',
   width: '100%',
-  backgroundColor: '#0095f6',
+  backgroundColor: theme.accent,
   color: 'white',
   textAlign: 'center',
   fontWeight: 600,
@@ -63,18 +64,18 @@ const StyledButton = styled.button({
   borderRadius: '4px',
   padding: '8px',
   marginTop: '10px',
-});
+}));
 
 const BottomBox = styled(Box)({
   padding: '20px 0',
   textAlign: 'center',
 });
 
-const StyledA = styled.a({
+const StyledLink = styled(Link)(({ theme }) => ({
   fontWeight: 600,
-  color: '#0095f6',
-  marginLeft: '10px',
-});
+  color: theme.accent,
+  marginLeft: '8px',
+}));
 
 const Login = () => {
   return (
@@ -97,7 +98,7 @@ const Login = () => {
 
         <BottomBox>
           <span>계정이 없으신가요?</span>
-          <StyledA href="#">가입하기</StyledA>
+          <StyledLink to="/signup">가입하기</StyledLink>
         </BottomBox>
       </BoxContainer>
     </Container>
