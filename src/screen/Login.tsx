@@ -1,46 +1,105 @@
-import { useState } from 'react';
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 
-import { isDarkModeVar } from '../apollo';
+const Container = styled.div({
+  height: '100vh',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
 
-const StyledContainer = styled.div({});
+const BoxContainer = styled.div({
+  maxWidth: '350px',
+  width: '100%',
+});
 
-interface IStyledTitle {
-  state: boolean;
-}
+const Box = styled.div({
+  backgroundColor: 'white',
+  border: '1px solid #dbdbdb',
+});
 
-const StyledTitle = styled.h1<IStyledTitle>(({ theme, state }) => ({
-  color: theme.fontColor,
-  backgroundColor: theme.bgColor,
-  fontFamily: 'sans-serif',
-}));
+const TopBox = styled(Box)({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  flexDirection: 'column',
+  padding: '30px 40px',
+  marginBottom: '10px',
+});
+
+const StyledForm = styled.form({
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  flexDirection: 'column',
+  marginTop: '30px',
+});
+
+const StyledInput = styled.input({
+  boxSizing: 'border-box',
+  width: '100%',
+  padding: '8px',
+  backgroundColor: '#fafafa',
+  border: '0.5px solid #dbdbdb',
+  borderRadius: '4px',
+  marginBottom: '5px',
+
+  '&::placeholder': {
+    fontSize: '12px',
+  },
+});
 
 const StyledButton = styled.button({
-  color: 'red',
+  boxSizing: 'border-box',
+  width: '100%',
+  backgroundColor: '#0095f6',
+  color: 'white',
+  textAlign: 'center',
+  fontWeight: 600,
+  border: 'none',
+  borderRadius: '4px',
+  padding: '8px',
+  marginTop: '10px',
+});
+
+const BottomBox = styled(Box)({
+  padding: '20px 0',
+  textAlign: 'center',
+});
+
+const StyledA = styled.a({
+  fontWeight: 600,
+  color: '#0095f6',
 });
 
 const Login = () => {
-  const [state, setState] = useState(false);
-
-  const onToggle = useCallback(() => {
-    setState(prev => !prev);
-  }, []);
-
-  const onClick = useCallback(
-    (isDark: boolean) => () => {
-      isDarkModeVar(isDark);
-    },
-    []
-  );
-
   return (
-    <StyledContainer>
-      <StyledTitle state={state}>Login</StyledTitle>
-      <StyledButton onClick={onToggle}>Toggle</StyledButton>
-      <button onClick={onClick(true)}>Dark</button>
-      <button onClick={onClick(false)}>Light</button>
-    </StyledContainer>
+    <Container>
+      <BoxContainer>
+        <TopBox>
+          <div>
+            <FontAwesomeIcon icon={faInstagram} size="3x" />
+          </div>
+
+          <StyledForm>
+            <StyledInput
+              type="text"
+              placeholder="전화번호, 사용자 이름 또는 이메일"
+            />
+            <StyledInput type="password" placeholder="비밀번호" />
+            <StyledButton type="submit">로그인</StyledButton>
+          </StyledForm>
+        </TopBox>
+
+        <BottomBox>
+          <span>계정이 없으신가요?</span>
+          <StyledA href="#">가입하기</StyledA>
+        </BottomBox>
+      </BoxContainer>
+    </Container>
   );
 };
 

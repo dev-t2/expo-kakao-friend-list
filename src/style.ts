@@ -1,17 +1,25 @@
 import { createGlobalStyle, DefaultTheme } from 'styled-components';
 
-export const lightTheme: DefaultTheme = {
-  fontColor: '#2c2c2c',
-  bgColor: 'lightgray',
-};
+export const lightTheme: DefaultTheme = {};
 
-export const darkTheme: DefaultTheme = {
-  fontColor: 'lightgray',
-  bgColor: '#2c2c2c',
-};
+export const darkTheme: DefaultTheme = {};
 
 export const GlobalStyle = createGlobalStyle(({ theme }) => ({
+  '*': {
+    boxSizing: 'border-box',
+  },
   body: {
-    backgroundColor: theme.bgColor,
+    backgroundColor: '#fafafa',
+    fontSize: '14px',
+    fontFamily: 'Noto Sans KR, sans-serif',
+  },
+  input: {
+    all: 'unset',
+  },
+  button: {
+    all: 'unset',
+  },
+  a: {
+    textDecoration: 'none',
   },
 }));
