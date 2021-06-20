@@ -1,5 +1,5 @@
 import { memo, useCallback } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 
@@ -7,21 +7,21 @@ import { PageTitle } from '../component/common';
 import { Link, Button, Error, Form, Input, Layout } from '../component/auth';
 import { SIGNUP } from '../route';
 
-type FormData = {
-  email: string;
-  password: string;
-};
+interface IForm {
+  email?: string;
+  password?: string;
+}
 
 const Login = () => {
   const {
     register,
     handleSubmit,
     formState: { isValid, errors },
-  } = useForm<FormData>({
+  } = useForm<IForm>({
     mode: 'onChange',
   });
 
-  const onValid = useCallback(data => {
+  const onValid: SubmitHandler<IForm> = useCallback(data => {
     console.log(data);
   }, []);
 
