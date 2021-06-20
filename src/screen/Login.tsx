@@ -73,6 +73,7 @@ const BottomBox = styled(Box)({
 const StyledA = styled.a({
   fontWeight: 600,
   color: '#0095f6',
+  marginLeft: '10px',
 });
 
 const Login = () => {
