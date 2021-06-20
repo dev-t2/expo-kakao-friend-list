@@ -28,7 +28,7 @@ const Signup = () => {
         </HeaderContainer>
 
         <form>
-          <Input type="email" placeholder="이메일 주소" />
+          <Input type="email" placeholder="이메일" />
           <Input type="text" placeholder="이름" />
           <Input type="text" placeholder="닉네임" />
           <Input type="password" placeholder="비밀번호" />

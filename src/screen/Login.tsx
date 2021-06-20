@@ -14,7 +14,7 @@ const Login = () => {
         </div>
 
         <form>
-          <Input type="text" placeholder="전화번호, 사용자 이름 또는 이메일" />
+          <Input type="text" placeholder="이메일" />
           <Input type="password" placeholder="비밀번호" />
           <Button type="submit">로그인</Button>
         </form>
