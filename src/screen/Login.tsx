@@ -4,19 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { Link } from 'react-router-dom';
 
+import { AuthLayout } from '../component/auth';
 import { SIGNUP } from '../route';
-
-const Container = styled.div({
-  height: '100vh',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-});
-
-const BoxContainer = styled.div({
-  maxWidth: '350px',
-  width: '100%',
-});
 
 const Box = styled.div(({ theme }) => ({
   backgroundColor: 'white',
@@ -81,29 +70,27 @@ const StyledLink = styled(Link)(({ theme }) => ({
 
 const Login = () => {
   return (
-    <Container>
-      <BoxContainer>
-        <TopBox>
-          <div>
-            <FontAwesomeIcon icon={faInstagram} size="3x" />
-          </div>
+    <AuthLayout>
+      <TopBox>
+        <div>
+          <FontAwesomeIcon icon={faInstagram} size="3x" />
+        </div>
 
-          <StyledForm>
-            <StyledInput
-              type="text"
-              placeholder="전화번호, 사용자 이름 또는 이메일"
-            />
-            <StyledInput type="password" placeholder="비밀번호" />
-            <StyledButton type="submit">로그인</StyledButton>
-          </StyledForm>
-        </TopBox>
+        <StyledForm>
+          <StyledInput
+            type="text"
+            placeholder="전화번호, 사용자 이름 또는 이메일"
+          />
+          <StyledInput type="password" placeholder="비밀번호" />
+          <StyledButton type="submit">로그인</StyledButton>
+        </StyledForm>
+      </TopBox>
 
-        <BottomBox>
-          <span>계정이 없으신가요?</span>
-          <StyledLink to={SIGNUP}>가입하기</StyledLink>
-        </BottomBox>
-      </BoxContainer>
-    </Container>
+      <BottomBox>
+        <span>계정이 없으신가요?</span>
+        <StyledLink to={SIGNUP}>가입하기</StyledLink>
+      </BottomBox>
+    </AuthLayout>
   );
 };
 
