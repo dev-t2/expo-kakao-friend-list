@@ -4,13 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { Link } from 'react-router-dom';
 
-import { AuthLayout } from '../component/auth';
+import { Button, Input, Layout } from '../component/auth';
+import { Box } from '../component/common';
 import { SIGNUP } from '../route';
-
-const Box = styled.div(({ theme }) => ({
-  backgroundColor: 'white',
-  border: `1px solid ${theme.borderColor}`,
-}));
 
 const TopBox = styled(Box)({
   display: 'flex',
@@ -30,33 +26,6 @@ const StyledForm = styled.form({
   marginTop: '30px',
 });
 
-const StyledInput = styled.input(({ theme }) => ({
-  boxSizing: 'border-box',
-  width: '100%',
-  padding: '8px',
-  backgroundColor: '#fafafa',
-  border: `0.5px solid ${theme.borderColor}`,
-  borderRadius: '4px',
-  marginBottom: '5px',
-
-  '&::placeholder': {
-    fontSize: '12px',
-  },
-}));
-
-const StyledButton = styled.button(({ theme }) => ({
-  boxSizing: 'border-box',
-  width: '100%',
-  backgroundColor: theme.accent,
-  color: 'white',
-  textAlign: 'center',
-  fontWeight: 600,
-  border: 'none',
-  borderRadius: '4px',
-  padding: '8px',
-  marginTop: '10px',
-}));
-
 const BottomBox = styled(Box)({
   padding: '20px 0',
   textAlign: 'center',
@@ -70,19 +39,16 @@ const StyledLink = styled(Link)(({ theme }) => ({
 
 const Login = () => {
   return (
-    <AuthLayout>
+    <Layout>
       <TopBox>
         <div>
           <FontAwesomeIcon icon={faInstagram} size="3x" />
         </div>
 
         <StyledForm>
-          <StyledInput
-            type="text"
-            placeholder="전화번호, 사용자 이름 또는 이메일"
-          />
-          <StyledInput type="password" placeholder="비밀번호" />
-          <StyledButton type="submit">로그인</StyledButton>
+          <Input type="text" placeholder="전화번호, 사용자 이름 또는 이메일" />
+          <Input type="password" placeholder="비밀번호" />
+          <Button type="submit">로그인</Button>
         </StyledForm>
       </TopBox>
 
@@ -90,7 +56,7 @@ const Login = () => {
         <span>계정이 없으신가요?</span>
         <StyledLink to={SIGNUP}>가입하기</StyledLink>
       </BottomBox>
-    </AuthLayout>
+    </Layout>
   );
 };
 
