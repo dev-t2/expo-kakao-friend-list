@@ -4,7 +4,7 @@ import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import styled from 'styled-components';
 
 import { BoldLink, PageTitle } from '../component/common';
-import { BottomLink, Button, Form, Input, Layout } from '../component/auth';
+import { Link, Button, Form, Input, Layout } from '../component/auth';
 import { HOME } from '../route';
 
 const HeaderContainer = styled.div({
@@ -38,7 +38,7 @@ const Signup = () => {
         </form>
       </Form>
 
-      <BottomLink text="계정이 있으신가요?" link={HOME} linkText="로그인" />
+      <Link text="계정이 있으신가요?" link={HOME} linkText="로그인" />
     </Layout>
   );
 };

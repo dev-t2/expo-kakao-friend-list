@@ -1,5 +1,5 @@
 import { FC, memo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Box } from '../common';
@@ -15,19 +15,19 @@ const Container = styled(Box)(({ theme }) => ({
   },
 }));
 
-interface IBottomLink {
+interface ILink {
   text: string;
   link: string;
   linkText: string;
 }
 
-const BottomLink: FC<IBottomLink> = ({ text, link, linkText }) => {
+const Link: FC<ILink> = ({ text, link, linkText }) => {
   return (
     <Container>
       <span>{text}</span>
-      <Link to={link}>{linkText}</Link>
+      <RouterLink to={link}>{linkText}</RouterLink>
     </Container>
   );
 };
 
-export default memo(BottomLink);
+export default memo(Link);

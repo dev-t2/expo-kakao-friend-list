@@ -16,7 +16,7 @@ export const GlobalStyle = createGlobalStyle(({ theme }) => ({
   },
   body: {
     backgroundColor: '#fafafa',
-    fontSize: '14px',
+    fontSize: 14,
     fontFamily: 'Noto Sans KR, sans-serif',
     color: '#262626',
   },

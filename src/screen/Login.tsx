@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 
 import { PageTitle } from '../component/common';
-import { BottomLink, Button, Form, Input, Layout } from '../component/auth';
+import { Link, Button, Error, Form, Input, Layout } from '../component/auth';
 import { SIGNUP } from '../route';
 
 type FormData = {
@@ -13,13 +13,15 @@ type FormData = {
 };
 
 const Login = () => {
-  const { register, handleSubmit } = useForm<FormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid, errors },
+  } = useForm<FormData>({
+    mode: 'onChange',
+  });
 
   const onValid = useCallback(data => {
-    console.log(data);
-  }, []);
-
-  const onInvalid = useCallback(data => {
     console.log(data);
   }, []);
 
@@ -32,24 +34,35 @@ const Login = () => {
           <FontAwesomeIcon icon={faInstagram} size="3x" />
         </div>
 
-        <form onSubmit={handleSubmit(onValid, onInvalid)}>
+        <form onSubmit={handleSubmit(onValid)}>
           <Input
-            {...register('email', { required: true })}
             type="email"
-            name="email"
+            {...register('email', {
+              required: { value: true, message: '이메일을 입력하세요' },
+            })}
             placeholder="이메일"
+            isError={errors.email}
           />
+          <Error message={errors.email?.message} />
+
           <Input
-            {...register('password', { required: true })}
             type="password"
-            name="password"
+            {...register('password', {
+              required: { value: true, message: '비밀번호를 입력하세요' },
+              minLength: { value: 6, message: '6자리 이상 입력하세요' },
+            })}
             placeholder="비밀번호"
+            isError={errors.password}
           />
-          <Button type="submit">로그인</Button>
+          <Error message={errors.password?.message} />
+
+          <Button type="submit" disabled={!isValid}>
+            로그인
+          </Button>
         </form>
       </Form>
 
-      <BottomLink text="계정이 없으신가요?" link={SIGNUP} linkText="가입하기" />
+      <Link text="계정이 없으신가요?" link={SIGNUP} linkText="가입하기" />
     </Layout>
   );
 };
