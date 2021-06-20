@@ -14,11 +14,11 @@ const Wrapper = styled.div({
   width: '100%',
 });
 
-interface IAuthLayout {
+interface ILayout {
   children: ReactNode;
 }
 
-const AuthLayout: FC<IAuthLayout> = ({ children }) => {
+const Layout: FC<ILayout> = ({ children }) => {
   return (
     <Container>
       <Wrapper>{children}</Wrapper>
@@ -26,4 +26,4 @@ const AuthLayout: FC<IAuthLayout> = ({ children }) => {
   );
 };
 
-export default memo(AuthLayout);
+export default memo(Layout);

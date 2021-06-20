@@ -1,23 +1,9 @@
 import { memo } from 'react';
-import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
-import { Link } from 'react-router-dom';
 
-import { Button, Form, Input, Layout } from '../component/auth';
-import { Box } from '../component/common';
+import { BottomLink, Button, Form, Input, Layout } from '../component/auth';
 import { SIGNUP } from '../route';
-
-const BottomBox = styled(Box)({
-  padding: '20px 0',
-  textAlign: 'center',
-});
-
-const StyledLink = styled(Link)(({ theme }) => ({
-  fontWeight: 600,
-  color: theme.accent,
-  marginLeft: '8px',
-}));
 
 const Login = () => {
   return (
@@ -34,10 +20,7 @@ const Login = () => {
         </form>
       </Form>
 
-      <BottomBox>
-        <span>계정이 없으신가요?</span>
-        <StyledLink to={SIGNUP}>가입하기</StyledLink>
-      </BottomBox>
+      <BottomLink text="계정이 없으신가요?" link={SIGNUP} linkText="가입하기" />
     </Layout>
   );
 };
