@@ -1,10 +1,14 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
+import { gql, useMutation } from '@apollo/client';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
-import styled from 'styled-components';
 
 import { BoldLink, PageTitle } from '../component/common';
-import { Link, Button, Form, Input, Layout } from '../component/auth';
+import { Link, Button, Error, Form, Input, Layout } from '../component/auth';
+import { email, name, nickname, password } from '../valid';
 import { HOME } from '../route';
 
 const HeaderContainer = styled.div({
@@ -18,7 +22,69 @@ const SubTitle = styled(BoldLink)({
   marginTop: '10px',
 });
 
+const SIGNUP_MUTATION = gql`
+  mutation signup(
+    $name: String!
+    $nickname: String!
+    $email: String!
+    $password: String!
+  ) {
+    signup(
+      name: $name
+      nickname: $nickname
+      email: $email
+      password: $password
+    ) {
+      isSuccess
+      error
+    }
+  }
+`;
+
+interface IForm {
+  name?: string;
+  email?: string;
+  nickname?: string;
+  password?: string;
+  server?: string;
+}
+
 const Signup = () => {
+  const history = useHistory();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid, errors },
+    setError,
+    clearErrors,
+  } = useForm<IForm>({
+    mode: 'onChange',
+  });
+
+  const [signup, { loading }] = useMutation(SIGNUP_MUTATION, {
+    onCompleted: ({ signup: { isSuccess, error } }) => {
+      if (!isSuccess) {
+        return setError('server', { message: error });
+      }
+
+      history.replace(HOME);
+    },
+  });
+
+  const onValid: SubmitHandler<IForm> = useCallback(
+    ({ name, nickname, email, password }) => {
+      if (loading) return;
+
+      signup({ variables: { name, nickname, email, password } });
+    },
+    [loading, signup]
+  );
+
+  const onFocus = useCallback(() => {
+    clearErrors('server');
+  }, [clearErrors]);
+
   return (
     <Layout>
       <PageTitle title="Signup" />
@@ -29,12 +95,48 @@ const Signup = () => {
           <SubTitle>친구들의 사진을 보려면 가입하세요.</SubTitle>
         </HeaderContainer>
 
-        <form>
-          <Input type="email" placeholder="이메일" />
-          <Input type="text" placeholder="이름" />
-          <Input type="text" placeholder="닉네임" />
-          <Input type="password" placeholder="비밀번호" />
-          <Button type="submit">가입</Button>
+        <form onSubmit={handleSubmit(onValid)}>
+          <Input
+            type="text"
+            {...register('name', name)}
+            placeholder="이름"
+            isError={errors.name}
+            onFocus={onFocus}
+          />
+          <Error message={errors.name?.message} />
+
+          <Input
+            type="text"
+            {...register('nickname', nickname)}
+            placeholder="닉네임"
+            isError={errors.nickname}
+            onFocus={onFocus}
+          />
+          <Error message={errors.nickname?.message} />
+
+          <Input
+            type="email"
+            {...register('email', email)}
+            placeholder="이메일"
+            isError={errors.email}
+            onFocus={onFocus}
+          />
+          <Error message={errors.email?.message} />
+
+          <Input
+            type="password"
+            {...register('password', password)}
+            placeholder="비밀번호"
+            isError={errors.password}
+            onFocus={onFocus}
+          />
+          <Error message={errors.password?.message} />
+
+          <Button type="submit" disabled={!isValid || loading}>
+            {loading ? '로딩 중...' : '가입'}
+          </Button>
+
+          <Error message={errors.server?.message} />
         </form>
       </Form>
 

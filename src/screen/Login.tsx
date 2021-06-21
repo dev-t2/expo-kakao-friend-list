@@ -1,12 +1,13 @@
 import { memo, useCallback } from 'react';
 import { gql, useMutation } from '@apollo/client';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 
 import { setToken } from '../apollo';
 import { PageTitle } from '../component/common';
 import { Link, Button, Error, Form, Input, Layout } from '../component/auth';
+import { nickname, password } from '../valid';
 import { SIGNUP } from '../route';
 
 const LOGIN_MUTATION = gql`
@@ -22,7 +23,7 @@ const LOGIN_MUTATION = gql`
 interface IForm {
   nickname?: string;
   password?: string;
-  server: string;
+  server?: string;
 }
 
 const Login = () => {
@@ -30,7 +31,6 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { isValid, errors },
-    getValues,
     setError,
     clearErrors,
   } = useForm<IForm>({
@@ -49,15 +49,16 @@ const Login = () => {
     },
   });
 
-  const onValid = useCallback(() => {
-    if (loading) return;
+  const onValid: SubmitHandler<IForm> = useCallback(
+    ({ nickname, password }) => {
+      if (loading) return;
 
-    const { nickname, password } = getValues();
-
-    login({
-      variables: { nickname, password },
-    });
-  }, [loading, getValues, login]);
+      login({
+        variables: { nickname, password },
+      });
+    },
+    [loading, login]
+  );
 
   const onFocus = useCallback(() => {
     clearErrors('server');
@@ -75,9 +76,7 @@ const Login = () => {
         <form onSubmit={handleSubmit(onValid)}>
           <Input
             type="text"
-            {...register('nickname', {
-              required: { value: true, message: '닉네임을 입력하세요.' },
-            })}
+            {...register('nickname', nickname)}
             placeholder="닉네임"
             isError={errors.nickname}
             onFocus={onFocus}
@@ -86,10 +85,7 @@ const Login = () => {
 
           <Input
             type="password"
-            {...register('password', {
-              required: { value: true, message: '비밀번호를 입력하세요.' },
-              minLength: { value: 6, message: '6자리 이상 입력하세요.' },
-            })}
+            {...register('password', password)}
             placeholder="비밀번호"
             isError={errors.password}
             onFocus={onFocus}
