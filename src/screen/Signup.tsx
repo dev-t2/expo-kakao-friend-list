@@ -72,7 +72,6 @@ const Signup = () => {
       const { nickname, password } = getValues();
 
       history.replace(HOME, {
-        message: '계정이 생성되었습니다.',
         nickname,
         password,
       });

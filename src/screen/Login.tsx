@@ -1,5 +1,4 @@
 import { memo, useCallback } from 'react';
-import styled from 'styled-components';
 import { gql, useMutation } from '@apollo/client';
 import { useLocation } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -12,13 +11,6 @@ import { Link, Button, Error, Form, Input, Layout } from '../component/auth';
 import { nickname, password } from '../valid';
 import { SIGNUP } from '../route';
 
-const Notification = styled.div({
-  color: '#2ecc71',
-  fontSize: 12,
-  fontWeight: 600,
-  marginTop: '10px',
-});
-
 const LOGIN_MUTATION = gql`
   mutation login($nickname: String!, $password: String!) {
     login(nickname: $nickname, password: $password) {
@@ -30,7 +22,6 @@ const LOGIN_MUTATION = gql`
 `;
 
 interface ILocation {
-  message: string;
   nickname: string;
   password: string;
 }
@@ -93,10 +84,6 @@ const Login = () => {
         <div>
           <FontAwesomeIcon icon={faInstagram} size="3x" />
         </div>
-
-        {location?.state?.message && (
-          <Notification>{location?.state?.message}</Notification>
-        )}
 
         <form onSubmit={handleSubmit(onValid)}>
           <Input
