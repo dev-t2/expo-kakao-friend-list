@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 
+import { login, loginVariables } from '../__generated__/login';
 import { setToken } from '../apollo';
 import { PageTitle } from '../component/common';
 import { Link, Button, Error, Form, Input, Layout } from '../component/auth';
@@ -27,9 +28,9 @@ interface ILocation {
 }
 
 interface IForm {
-  nickname?: string;
-  password?: string;
-  server?: string;
+  nickname: string;
+  password: string;
+  server: string;
 }
 
 const Login = () => {
@@ -49,17 +50,20 @@ const Login = () => {
     },
   });
 
-  const [login, { loading }] = useMutation(LOGIN_MUTATION, {
-    onCompleted: ({ login: { isSuccess, token, error } }) => {
-      if (!isSuccess) {
-        return setError('server', { message: error });
-      }
+  const [login, { loading }] = useMutation<login, loginVariables>(
+    LOGIN_MUTATION,
+    {
+      onCompleted: ({ login: { isSuccess, token, error } }) => {
+        if (!isSuccess) {
+          return setError('server', { message: error ?? '' });
+        }
 
-      if (token) {
-        setToken(token);
-      }
-    },
-  });
+        if (token) {
+          setToken(token);
+        }
+      },
+    }
+  );
 
   const onValid: SubmitHandler<IForm> = useCallback(
     ({ nickname, password }) => {

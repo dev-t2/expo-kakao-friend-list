@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 
+import { signup, signupVariables } from '../__generated__/signup';
 import { BoldLink, PageTitle } from '../component/common';
 import { Link, Button, Error, Form, Input, Layout } from '../component/auth';
 import { email, name, nickname, password } from '../valid';
@@ -42,11 +43,11 @@ const SIGNUP_MUTATION = gql`
 `;
 
 interface IForm {
-  name?: string;
-  email?: string;
-  nickname?: string;
-  password?: string;
-  server?: string;
+  name: string;
+  email: string;
+  nickname: string;
+  password: string;
+  server: string;
 }
 
 const Signup = () => {
@@ -63,20 +64,23 @@ const Signup = () => {
     mode: 'onChange',
   });
 
-  const [signup, { loading }] = useMutation(SIGNUP_MUTATION, {
-    onCompleted: ({ signup: { isSuccess, error } }) => {
-      if (!isSuccess) {
-        return setError('server', { message: error });
-      }
+  const [signup, { loading }] = useMutation<signup, signupVariables>(
+    SIGNUP_MUTATION,
+    {
+      onCompleted: ({ signup: { isSuccess, error } }) => {
+        if (!isSuccess) {
+          return setError('server', { message: error ?? '' });
+        }
 
-      const { nickname, password } = getValues();
+        const { nickname, password } = getValues();
 
-      history.replace(HOME, {
-        nickname,
-        password,
-      });
-    },
-  });
+        history.replace(HOME, {
+          nickname,
+          password,
+        });
+      },
+    }
+  );
 
   const onValid: SubmitHandler<IForm> = useCallback(
     ({ name, nickname, email, password }) => {
