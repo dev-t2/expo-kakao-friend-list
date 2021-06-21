@@ -1,10 +1,10 @@
 import { memo, useCallback } from 'react';
 
-import { isLoggedInVar } from '../apollo';
+import { removeToken } from '../apollo';
 
 const Home = () => {
   const onClick = useCallback(() => {
-    isLoggedInVar(false);
+    removeToken();
   }, []);
 
   return (

@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 
+import { setToken } from '../apollo';
 import { PageTitle } from '../component/common';
 import { Link, Button, Error, Form, Input, Layout } from '../component/auth';
 import { SIGNUP } from '../route';
@@ -39,7 +40,11 @@ const Login = () => {
   const [login, { loading }] = useMutation(LOGIN_MUTATION, {
     onCompleted: ({ login: { isSuccess, token, error } }) => {
       if (!isSuccess) {
-        setError('server', { message: error });
+        return setError('server', { message: error });
+      }
+
+      if (token) {
+        setToken(token);
       }
     },
   });
