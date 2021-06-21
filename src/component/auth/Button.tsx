@@ -17,6 +17,7 @@ const Button = styled.button<IButton>(({ theme, disabled }) => ({
   padding: '8px',
   marginTop: '10px',
   opacity: disabled ? 0.4 : 1,
+  cursor: 'pointer',
 }));
 
 export default memo(Button);
