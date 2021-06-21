@@ -1,5 +1,7 @@
 import { memo, useCallback } from 'react';
+import styled from 'styled-components';
 import { gql, useMutation } from '@apollo/client';
+import { useLocation } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
@@ -9,6 +11,13 @@ import { PageTitle } from '../component/common';
 import { Link, Button, Error, Form, Input, Layout } from '../component/auth';
 import { nickname, password } from '../valid';
 import { SIGNUP } from '../route';
+
+const Notification = styled.div({
+  color: '#2ecc71',
+  fontSize: 12,
+  fontWeight: 600,
+  marginTop: '10px',
+});
 
 const LOGIN_MUTATION = gql`
   mutation login($nickname: String!, $password: String!) {
@@ -20,6 +29,12 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
+interface ILocation {
+  message: string;
+  nickname: string;
+  password: string;
+}
+
 interface IForm {
   nickname?: string;
   password?: string;
@@ -27,6 +42,8 @@ interface IForm {
 }
 
 const Login = () => {
+  const location = useLocation<ILocation>();
+
   const {
     register,
     handleSubmit,
@@ -35,6 +52,10 @@ const Login = () => {
     clearErrors,
   } = useForm<IForm>({
     mode: 'onChange',
+    defaultValues: {
+      nickname: location?.state?.nickname ?? '',
+      password: location?.state?.password ?? '',
+    },
   });
 
   const [login, { loading }] = useMutation(LOGIN_MUTATION, {
@@ -72,6 +93,10 @@ const Login = () => {
         <div>
           <FontAwesomeIcon icon={faInstagram} size="3x" />
         </div>
+
+        {location?.state?.message && (
+          <Notification>{location?.state?.message}</Notification>
+        )}
 
         <form onSubmit={handleSubmit(onValid)}>
           <Input

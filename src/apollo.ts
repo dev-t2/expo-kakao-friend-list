@@ -19,5 +19,5 @@ export const setToken = (token: string) => {
 export const removeToken = () => {
   localStorage.removeItem(TOKEN);
 
-  isLoggedInVar(false);
+  window.location.reload();
 };

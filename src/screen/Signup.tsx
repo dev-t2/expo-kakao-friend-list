@@ -56,6 +56,7 @@ const Signup = () => {
     register,
     handleSubmit,
     formState: { isValid, errors },
+    getValues,
     setError,
     clearErrors,
   } = useForm<IForm>({
@@ -68,7 +69,13 @@ const Signup = () => {
         return setError('server', { message: error });
       }
 
-      history.replace(HOME);
+      const { nickname, password } = getValues();
+
+      history.replace(HOME, {
+        message: '계정이 생성되었습니다.',
+        nickname,
+        password,
+      });
     },
   });
 
