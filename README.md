@@ -10,3 +10,4 @@
 - Google Fonts: https://fonts.google.com/
 - React Helmet Async: https://www.npmjs.com/package/react-helmet-async
 - React Hook Form: https://react-hook-form.com/
+- Apollo Client Devtools: https://chrome.google.com/webstore/detail/apollo-client-devtools/jdkknkkbebbapilgoeccciglkfbmbnfm?utm_source=chrome-ntp-icon
