@@ -1,5 +1,6 @@
 import { memo, useCallback } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { gql, useMutation } from '@apollo/client';
+import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 
@@ -7,9 +8,20 @@ import { PageTitle } from '../component/common';
 import { Link, Button, Error, Form, Input, Layout } from '../component/auth';
 import { SIGNUP } from '../route';
 
+const LOGIN_MUTATION = gql`
+  mutation login($nickname: String!, $password: String!) {
+    login(nickname: $nickname, password: $password) {
+      isSuccess
+      token
+      error
+    }
+  }
+`;
+
 interface IForm {
-  email?: string;
+  nickname?: string;
   password?: string;
+  error?: string;
 }
 
 const Login = () => {
@@ -17,13 +29,29 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { isValid, errors },
+    getValues,
+    setError,
   } = useForm<IForm>({
     mode: 'onChange',
   });
 
-  const onValid: SubmitHandler<IForm> = useCallback(data => {
-    console.log(data);
-  }, []);
+  const [login, { loading }] = useMutation(LOGIN_MUTATION, {
+    onCompleted: ({ login: { isSuccess, token, error } }) => {
+      if (!isSuccess) {
+        setError('error', { message: error });
+      }
+    },
+  });
+
+  const onValid = useCallback(() => {
+    if (loading) return;
+
+    const { nickname, password } = getValues();
+
+    login({
+      variables: { nickname, password },
+    });
+  }, [loading, getValues, login]);
 
   return (
     <Layout>
@@ -36,14 +64,14 @@ const Login = () => {
 
         <form onSubmit={handleSubmit(onValid)}>
           <Input
-            type="email"
-            {...register('email', {
-              required: { value: true, message: '이메일을 입력하세요' },
+            type="text"
+            {...register('nickname', {
+              required: { value: true, message: '닉네임을 입력하세요' },
             })}
-            placeholder="이메일"
-            isError={errors.email}
+            placeholder="닉네임"
+            isError={errors.nickname}
           />
-          <Error message={errors.email?.message} />
+          <Error message={errors.nickname?.message} />
 
           <Input
             type="password"
@@ -56,9 +84,11 @@ const Login = () => {
           />
           <Error message={errors.password?.message} />
 
-          <Button type="submit" disabled={!isValid}>
-            로그인
+          <Button type="submit" disabled={!isValid || loading}>
+            {loading ? '로딩중...' : '로그인'}
           </Button>
+
+          <Error message={errors.error?.message} />
         </form>
       </Form>
 
