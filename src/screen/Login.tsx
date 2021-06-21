@@ -21,7 +21,7 @@ const LOGIN_MUTATION = gql`
 interface IForm {
   nickname?: string;
   password?: string;
-  error?: string;
+  server: string;
 }
 
 const Login = () => {
@@ -31,6 +31,7 @@ const Login = () => {
     formState: { isValid, errors },
     getValues,
     setError,
+    clearErrors,
   } = useForm<IForm>({
     mode: 'onChange',
   });
@@ -38,7 +39,7 @@ const Login = () => {
   const [login, { loading }] = useMutation(LOGIN_MUTATION, {
     onCompleted: ({ login: { isSuccess, token, error } }) => {
       if (!isSuccess) {
-        setError('error', { message: error });
+        setError('server', { message: error });
       }
     },
   });
@@ -53,6 +54,10 @@ const Login = () => {
     });
   }, [loading, getValues, login]);
 
+  const onFocus = useCallback(() => {
+    clearErrors('server');
+  }, [clearErrors]);
+
   return (
     <Layout>
       <PageTitle title="Login" />
@@ -66,29 +71,31 @@ const Login = () => {
           <Input
             type="text"
             {...register('nickname', {
-              required: { value: true, message: '닉네임을 입력하세요' },
+              required: { value: true, message: '닉네임을 입력하세요.' },
             })}
             placeholder="닉네임"
             isError={errors.nickname}
+            onFocus={onFocus}
           />
           <Error message={errors.nickname?.message} />
 
           <Input
             type="password"
             {...register('password', {
-              required: { value: true, message: '비밀번호를 입력하세요' },
-              minLength: { value: 6, message: '6자리 이상 입력하세요' },
+              required: { value: true, message: '비밀번호를 입력하세요.' },
+              minLength: { value: 6, message: '6자리 이상 입력하세요.' },
             })}
             placeholder="비밀번호"
             isError={errors.password}
+            onFocus={onFocus}
           />
           <Error message={errors.password?.message} />
 
           <Button type="submit" disabled={!isValid || loading}>
-            {loading ? '로딩중...' : '로그인'}
+            {loading ? '로딩 중...' : '로그인'}
           </Button>
 
-          <Error message={errors.error?.message} />
+          <Error message={errors.server?.message} />
         </form>
       </Form>
 
