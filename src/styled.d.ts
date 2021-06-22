@@ -2,9 +2,12 @@ import 'styled-components';
 
 declare module 'styled-components' {
   export interface DefaultTheme {
-    backgroundColor: string;
-    color: string;
-    accent: string;
-    borderColor: string;
+    background: string;
+    surface: string;
+    primary: string;
+    onSurface: string;
+    border: string;
+    focus: string;
+    error: string;
   }
 }

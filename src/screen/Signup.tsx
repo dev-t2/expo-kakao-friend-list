@@ -105,7 +105,7 @@ const Signup = () => {
           <SubTitle>친구들의 사진을 보려면 가입하세요.</SubTitle>
         </HeaderContainer>
 
-        <form onSubmit={handleSubmit(onValid)}>
+        <form autoComplete="off" onSubmit={handleSubmit(onValid)}>
           <Input
             type="text"
             {...register('name', name)}

@@ -8,7 +8,7 @@ interface IButton {
 const Button = styled.button<IButton>(({ theme, disabled }) => ({
   boxSizing: 'border-box',
   width: '100%',
-  backgroundColor: theme.accent,
+  backgroundColor: theme.primary,
   color: 'white',
   textAlign: 'center',
   fontWeight: 600,

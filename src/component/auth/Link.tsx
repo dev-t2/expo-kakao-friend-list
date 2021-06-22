@@ -10,7 +10,7 @@ const Container = styled(Box)(({ theme }) => ({
 
   a: {
     fontWeight: 600,
-    color: theme.accent,
+    color: theme.primary,
     marginLeft: '8px',
   },
 }));

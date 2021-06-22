@@ -89,7 +89,7 @@ const Login = () => {
           <FontAwesomeIcon icon={faInstagram} size="3x" />
         </div>
 
-        <form onSubmit={handleSubmit(onValid)}>
+        <form autoComplete="off" onSubmit={handleSubmit(onValid)}>
           <Input
             type="text"
             {...register('nickname', nickname)}
