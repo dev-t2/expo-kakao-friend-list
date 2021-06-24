@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 
 import { isLoggedInVar } from '../../apollo';
 import { HOME } from '../../route';
+import { useUser } from '../hook';
 
 const StyledHeader = styled.header(({ theme }) => ({
   width: '100%',
@@ -41,6 +42,7 @@ const Button = styled.span(({ theme }) => ({
 
 const Header = () => {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
+  const loggedInUser = useUser();
 
   return (
     <StyledHeader>
