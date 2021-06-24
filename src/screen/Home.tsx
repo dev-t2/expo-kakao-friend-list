@@ -1,17 +1,57 @@
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
+import { gql, useQuery } from '@apollo/client';
+import styled from 'styled-components';
+import { getFeeds } from '../__generated__/getFeeds';
+import { Avatar, BoldText } from '../component/common';
 
-import { removeToken } from '../apollo';
+const PhotoContainer = styled.div(({ theme }) => ({
+  backgroundColor: theme.surface,
+  border: `1px solid ${theme.border}`,
+  marginBottom: '20px',
+}));
+
+const PhotoHeader = styled.div({
+  display: 'flex',
+  alignItems: 'center',
+  padding: '5px 10px',
+});
+
+const Nickname = styled(BoldText)({
+  marginLeft: '5px',
+});
+
+const GET_FEEDS_QUERY = gql`
+  query getFeeds {
+    getFeeds {
+      id
+      user {
+        nickname
+        avatar
+      }
+      photoUrl
+      caption
+      like
+      comment
+      isMine
+      createdAt
+    }
+  }
+`;
 
 const Home = () => {
-  const onClick = useCallback(() => {
-    removeToken();
-  }, []);
+  const { data } = useQuery<getFeeds>(GET_FEEDS_QUERY);
 
   return (
-    <>
-      <h1>Home</h1>
-      <button onClick={onClick}>Logout</button>
-    </>
+    <div>
+      {data?.getFeeds?.map(feed => (
+        <PhotoContainer key={feed?.id}>
+          <PhotoHeader>
+            <Avatar avatar={feed?.user.avatar} />
+            <Nickname>{feed?.user.nickname}</Nickname>
+          </PhotoHeader>
+        </PhotoContainer>
+      ))}
+    </div>
   );
 };
 

@@ -8,7 +8,7 @@ const ME_QUERY = gql`
   query me {
     me {
       id
-      name
+      nickname
       avatar
     }
   }
