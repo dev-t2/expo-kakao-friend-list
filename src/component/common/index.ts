@@ -1,3 +1,4 @@
+export { default as Avatar } from './Avatar';
 export { default as BoldLink } from './BoldLink';
 export { default as Box } from './Box';
 export { default as Header } from './Header';

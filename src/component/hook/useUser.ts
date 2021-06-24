@@ -7,6 +7,7 @@ import { me } from '../../__generated__/me';
 const ME_QUERY = gql`
   query me {
     me {
+      id
       name
       avatar
     }
@@ -26,7 +27,7 @@ const useUser = () => {
     }
   }, [data]);
 
-  return;
+  return data;
 };
 
 export default useUser;
