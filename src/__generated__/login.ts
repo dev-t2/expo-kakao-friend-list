@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface login_login {
-  __typename: 'LoginResult';
+  __typename: "LoginResult";
   isSuccess: boolean;
   token: string | null;
   error: string | null;

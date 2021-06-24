@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface signup_signup {
-  __typename: 'CommonResult';
+  __typename: "CommonResult";
   isSuccess: boolean;
   error: string | null;
 }
