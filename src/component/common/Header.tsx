@@ -4,8 +4,10 @@ import { useReactiveVar } from '@apollo/client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 import { faCompass, faHome, faUser } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 import { isLoggedInVar } from '../../apollo';
+import { HOME } from '../../route';
 
 const StyledHeader = styled.header(({ theme }) => ({
   width: '100%',
@@ -28,6 +30,14 @@ const Container = styled.div({
 const Icon = styled.span({
   marginLeft: '15px',
 });
+
+const Button = styled.span(({ theme }) => ({
+  backgroundColor: theme.primary,
+  borderRadius: '4px',
+  padding: '4px 15px',
+  color: theme.background,
+  fontWeight: 600,
+}));
 
 const Header = () => {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
@@ -54,7 +64,11 @@ const Header = () => {
                 <FontAwesomeIcon icon={faUser} size="lg" />
               </Icon>
             </>
-          ) : null}
+          ) : (
+            <Link to={HOME}>
+              <Button>로그인</Button>
+            </Link>
+          )}
         </div>
       </Container>
     </StyledHeader>
