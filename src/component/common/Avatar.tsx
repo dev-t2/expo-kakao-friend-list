@@ -3,9 +3,13 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
-const StyledAvatar = styled.div(({ theme }) => ({
-  width: '20px',
-  height: '20px',
+interface IStyledAvatar {
+  isLarge?: boolean;
+}
+
+const StyledAvatar = styled.div<IStyledAvatar>(({ isLarge }) => ({
+  width: isLarge ? 30 : 25,
+  height: isLarge ? 30 : 25,
   borderRadius: '50%',
   overflow: 'hidden',
 }));
@@ -16,11 +20,12 @@ const StyledImg = styled.img({
 
 interface IAvatar {
   avatar?: string | null;
+  isLarge?: boolean;
 }
 
-const Avatar: FC<IAvatar> = ({ avatar }) => {
+const Avatar: FC<IAvatar> = ({ avatar, isLarge }) => {
   return (
-    <StyledAvatar>
+    <StyledAvatar isLarge={isLarge}>
       {avatar ? (
         <StyledImg src={avatar} alt="avatar" />
       ) : (

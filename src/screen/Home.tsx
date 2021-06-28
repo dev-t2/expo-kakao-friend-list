@@ -5,19 +5,20 @@ import { getFeeds } from '../__generated__/getFeeds';
 import { Avatar, BoldText } from '../component/common';
 
 const PhotoContainer = styled.div(({ theme }) => ({
+  maxWidth: 615,
   backgroundColor: theme.surface,
   border: `1px solid ${theme.border}`,
-  marginBottom: '20px',
+  marginBottom: 20,
 }));
 
 const PhotoHeader = styled.div({
   display: 'flex',
   alignItems: 'center',
-  padding: '5px 10px',
+  padding: '15px',
 });
 
 const Nickname = styled(BoldText)({
-  marginLeft: '5px',
+  marginLeft: '15px',
 });
 
 const GET_FEEDS_QUERY = gql`
@@ -46,7 +47,7 @@ const Home = () => {
       {data?.getFeeds?.map(feed => (
         <PhotoContainer key={feed?.id}>
           <PhotoHeader>
-            <Avatar avatar={feed?.user.avatar} />
+            <Avatar avatar={feed?.user.avatar} isLarge />
             <Nickname>{feed?.user.nickname}</Nickname>
           </PhotoHeader>
         </PhotoContainer>
