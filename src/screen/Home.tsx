@@ -10,6 +10,7 @@ import {
   faHeart,
   faPaperPlane,
 } from '@fortawesome/free-regular-svg-icons';
+import { faHeart as solidFaHeart } from '@fortawesome/free-solid-svg-icons';
 
 const PhotoContainer = styled.div(({ theme }) => ({
   maxWidth: 615,
@@ -36,7 +37,7 @@ const PhotoContents = styled.img({
 });
 
 const PhotoData = styled.div({
-  padding: '12px 15px',
+  padding: '10px 15px',
 });
 
 const PhotoActions = styled.div({
@@ -94,7 +95,10 @@ const Home = () => {
           <PhotoData>
             <PhotoActions>
               <PhotoAction>
-                <FontAwesomeIcon icon={faHeart} />
+                <FontAwesomeIcon
+                  style={{ color: feed?.isLiked ? 'tomato' : 'inherit' }}
+                  icon={feed?.isLiked ? solidFaHeart : faHeart}
+                />
               </PhotoAction>
               <PhotoAction>
                 <FontAwesomeIcon icon={faComment} />
