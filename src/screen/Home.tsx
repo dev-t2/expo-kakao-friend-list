@@ -14,11 +14,15 @@ const PhotoContainer = styled.div(({ theme }) => ({
 const PhotoHeader = styled.div({
   display: 'flex',
   alignItems: 'center',
-  padding: '15px',
+  padding: 15,
 });
 
 const Nickname = styled(BoldText)({
-  marginLeft: '15px',
+  marginLeft: 15,
+});
+
+const PhotoBody = styled.img({
+  minWidth: '100%',
 });
 
 const GET_FEEDS_QUERY = gql`
@@ -50,6 +54,8 @@ const Home = () => {
             <Avatar avatar={feed?.user.avatar} isLarge />
             <Nickname>{feed?.user.nickname}</Nickname>
           </PhotoHeader>
+
+          <PhotoBody src={feed?.photoUrl} alt={`Feed ${feed?.id}`} />
         </PhotoContainer>
       ))}
     </div>
