@@ -8,13 +8,13 @@
 // ====================================================
 
 export interface getFeeds_getFeeds_user {
-  __typename: "User";
+  __typename: 'User';
   nickname: string;
   avatar: string | null;
 }
 
 export interface getFeeds_getFeeds {
-  __typename: "Photo";
+  __typename: 'Photo';
   id: number;
   user: getFeeds_getFeeds_user;
   photoUrl: string;
@@ -22,6 +22,7 @@ export interface getFeeds_getFeeds {
   like: number;
   comment: number;
   isMine: boolean;
+  isLiked: boolean;
   createdAt: string;
 }
 

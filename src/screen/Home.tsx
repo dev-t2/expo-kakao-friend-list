@@ -15,14 +15,16 @@ const PhotoContainer = styled.div(({ theme }) => ({
   maxWidth: 615,
   backgroundColor: theme.surface,
   border: `1px solid ${theme.border}`,
-  marginBottom: 20,
+  borderRadius: 4,
+  marginBottom: 60,
 }));
 
-const PhotoHeader = styled.div({
+const PhotoHeader = styled.div(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   padding: 15,
-});
+  borderBottom: `1px solid ${theme.border}`,
+}));
 
 const Nickname = styled(BoldText)({
   marginLeft: 15,
@@ -30,10 +32,11 @@ const Nickname = styled(BoldText)({
 
 const PhotoContents = styled.img({
   minWidth: '100%',
+  maxWidth: '100%',
 });
 
 const PhotoData = styled.div({
-  padding: 15,
+  padding: '12px 15px',
 });
 
 const PhotoActions = styled.div({
@@ -44,6 +47,10 @@ const PhotoActions = styled.div({
 const PhotoAction = styled.div({
   cursor: 'pointer',
   marginRight: 15,
+
+  svg: {
+    fontSize: 20,
+  },
 });
 
 const Like = styled(BoldText)({
@@ -64,6 +71,7 @@ const GET_FEEDS_QUERY = gql`
       like
       comment
       isMine
+      isLiked
       createdAt
     }
   }
@@ -86,13 +94,13 @@ const Home = () => {
           <PhotoData>
             <PhotoActions>
               <PhotoAction>
-                <FontAwesomeIcon size="lg" icon={faHeart} />
+                <FontAwesomeIcon icon={faHeart} />
               </PhotoAction>
               <PhotoAction>
-                <FontAwesomeIcon size="lg" icon={faComment} />
+                <FontAwesomeIcon icon={faComment} />
               </PhotoAction>
               <PhotoAction>
-                <FontAwesomeIcon size="lg" icon={faPaperPlane} />
+                <FontAwesomeIcon icon={faPaperPlane} />
               </PhotoAction>
             </PhotoActions>
 
