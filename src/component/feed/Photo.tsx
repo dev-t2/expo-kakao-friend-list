@@ -89,14 +89,17 @@ const Photo: FC<IPhoto> = ({ id, user, photoUrl, like, isLiked }) => {
       variables: { id },
       update: (cache, { data }) => {
         if (data?.toggleLike?.isSuccess) {
+          const fragmentId = `Photo:${id}`;
+          const fragment = gql`
+            fragment Photo on Photo {
+              isLiked
+              like
+            }
+          `;
+
           cache.writeFragment({
-            id: `Photo:${id}`,
-            fragment: gql`
-              fragment Photo on Photo {
-                isLiked
-                like
-              }
-            `,
+            id: fragmentId,
+            fragment,
             data: {
               isLiked: !isLiked,
               like: isLiked ? like - 1 : like + 1,
