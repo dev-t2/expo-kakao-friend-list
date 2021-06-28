@@ -85,7 +85,14 @@ const TOGGLE_LIKE_MUTATION = gql`
 const Photo: FC<IPhoto> = ({ id, user, photoUrl, like, isLiked }) => {
   const [toggleLikeMutation] = useMutation<toggleLike, toggleLikeVariables>(
     TOGGLE_LIKE_MUTATION,
-    { variables: { id } }
+    {
+      variables: { id },
+      update: (cache, { data }) => {
+        if (data?.toggleLike?.isSuccess) {
+          console.log('123456');
+        }
+      },
+    }
   );
 
   const onClickLike = useCallback(() => {
