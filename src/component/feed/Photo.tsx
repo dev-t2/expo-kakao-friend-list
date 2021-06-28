@@ -94,10 +94,12 @@ const Photo: FC<IPhoto> = ({ id, user, photoUrl, like, isLiked }) => {
             fragment: gql`
               fragment Photo on Photo {
                 isLiked
+                like
               }
             `,
             data: {
               isLiked: !isLiked,
+              like: isLiked ? like - 1 : like + 1,
             },
           });
         }
