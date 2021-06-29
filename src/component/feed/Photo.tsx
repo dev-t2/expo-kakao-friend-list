@@ -89,20 +89,17 @@ const Photo: FC<getFeeds_getFeeds> = ({
       variables: { id },
       update: (cache, { data }) => {
         if (data?.toggleLike?.isSuccess) {
-          const fragmentId = `Photo:${id}`;
-          const fragment = gql`
-            fragment Photo on Photo {
-              numberOfLikes
-              isLiked
-            }
-          `;
+          const photoId = `Photo:${id}`;
 
-          cache.writeFragment({
-            id: fragmentId,
-            fragment,
-            data: {
-              numberOfLikes: isLiked ? numberOfLikes - 1 : numberOfLikes + 1,
-              isLiked: !isLiked,
+          cache.modify({
+            id: photoId,
+            fields: {
+              isLiked(prev) {
+                return !prev;
+              },
+              numberOfLikes(prev) {
+                return isLiked ? prev - 1 : prev + 1;
+              },
             },
           });
         }
