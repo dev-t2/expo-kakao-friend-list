@@ -4,16 +4,11 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: me
+// GraphQL fragment: Photo
 // ====================================================
 
-export interface me_me {
-  __typename: "User";
-  id: number;
-  nickname: string;
-  avatar: string | null;
-}
-
-export interface me {
-  me: me_me | null;
+export interface Photo {
+  __typename: "Photo";
+  numberOfLikes: number;
+  isLiked: boolean;
 }

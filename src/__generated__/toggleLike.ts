@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface toggleLike_toggleLike {
-  __typename: 'CommonResult';
+  __typename: "CommonResult";
   isSuccess: boolean;
   error: string | null;
 }

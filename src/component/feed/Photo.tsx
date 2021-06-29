@@ -9,6 +9,7 @@ import {
 import { faHeart as solidFaHeart } from '@fortawesome/free-solid-svg-icons';
 import { gql, useMutation } from '@apollo/client';
 
+import { getFeeds_getFeeds } from '../../__generated__/getFeeds';
 import {
   toggleLike,
   toggleLikeVariables,
@@ -40,7 +41,7 @@ const PhotoContents = styled.img({
 });
 
 const PhotoData = styled.div({
-  padding: '10px 15px',
+  padding: 15,
 });
 
 const PhotoActions = styled.div({
@@ -57,21 +58,27 @@ const PhotoAction = styled.div({
   },
 });
 
-const Like = styled(BoldText)({
+const LikeCount = styled(BoldText)({
   display: 'block',
   marginTop: 15,
 });
 
-interface IPhoto {
-  id: number;
-  user: {
-    nickname: string;
-    avatar: string | null;
-  };
-  photoUrl: string;
-  like: number;
-  isLiked: boolean;
-}
+const Comments = styled.div({
+  marginTop: 20,
+});
+
+const Comment = styled.div({});
+
+const Caption = styled.span({
+  marginLeft: 10,
+});
+
+const CommentCount = styled.div({
+  opacity: 0.6,
+  fontSize: 12,
+  fontWeight: 600,
+  marginTop: 10,
+});
 
 const TOGGLE_LIKE_MUTATION = gql`
   mutation toggleLike($id: Int!) {
@@ -82,7 +89,16 @@ const TOGGLE_LIKE_MUTATION = gql`
   }
 `;
 
-const Photo: FC<IPhoto> = ({ id, user, photoUrl, like, isLiked }) => {
+const Photo: FC<getFeeds_getFeeds> = ({
+  id,
+  user,
+  photoUrl,
+  caption,
+  numberOfLikes,
+  numberOfComments,
+  comments,
+  isLiked,
+}) => {
   const [toggleLikeMutation] = useMutation<toggleLike, toggleLikeVariables>(
     TOGGLE_LIKE_MUTATION,
     {
@@ -92,8 +108,8 @@ const Photo: FC<IPhoto> = ({ id, user, photoUrl, like, isLiked }) => {
           const fragmentId = `Photo:${id}`;
           const fragment = gql`
             fragment Photo on Photo {
+              numberOfLikes
               isLiked
-              like
             }
           `;
 
@@ -101,8 +117,8 @@ const Photo: FC<IPhoto> = ({ id, user, photoUrl, like, isLiked }) => {
             id: fragmentId,
             fragment,
             data: {
+              like: isLiked ? numberOfLikes - 1 : numberOfLikes + 1,
               isLiked: !isLiked,
-              like: isLiked ? like - 1 : like + 1,
             },
           });
         }
@@ -139,7 +155,23 @@ const Photo: FC<IPhoto> = ({ id, user, photoUrl, like, isLiked }) => {
           </PhotoAction>
         </PhotoActions>
 
-        <Like>좋아요 {like} 개</Like>
+        <LikeCount>좋아요 {numberOfLikes} 개</LikeCount>
+
+        <Comments>
+          <Comment>
+            <BoldText>{user.nickname}</BoldText>
+            <Caption>{caption}</Caption>
+          </Comment>
+
+          <CommentCount>댓글 {numberOfComments} 개</CommentCount>
+
+          {comments?.map(comment => (
+            <Comment key={comment?.id}>
+              <BoldText>{comment?.user.nickname}</BoldText>
+              <Caption>{comment?.comment}</Caption>
+            </Comment>
+          ))}
+        </Comments>
       </PhotoData>
     </PhotoContainer>
   );

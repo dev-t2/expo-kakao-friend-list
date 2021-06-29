@@ -15,8 +15,18 @@ const GET_FEEDS_QUERY = gql`
       }
       photoUrl
       caption
-      like
-      comment
+      numberOfLikes
+      numberOfComments
+      comments {
+        id
+        user {
+          nickname
+          avatar
+        }
+        comment
+        isMine
+        createdAt
+      }
       isMine
       isLiked
       createdAt
