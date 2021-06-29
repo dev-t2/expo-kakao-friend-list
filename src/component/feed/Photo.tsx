@@ -101,7 +101,7 @@ const Photo: FC<getFeeds_getFeeds> = ({
             id: fragmentId,
             fragment,
             data: {
-              like: isLiked ? numberOfLikes - 1 : numberOfLikes + 1,
+              numberOfLikes: isLiked ? numberOfLikes - 1 : numberOfLikes + 1,
               isLiked: !isLiked,
             },
           });

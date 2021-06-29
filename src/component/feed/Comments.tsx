@@ -12,7 +12,8 @@ const CommentCount = styled.div({
   opacity: 0.6,
   fontSize: 12,
   fontWeight: 600,
-  marginTop: 10,
+  marginTop: 20,
+  marginBottom: 10,
 });
 
 interface IComments {

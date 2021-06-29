@@ -18,7 +18,13 @@ const Comment: FC<IComment> = ({ name, contents }) => {
   return (
     <Container>
       <BoldText>{name}</BoldText>
-      <Caption>{contents}</Caption>
+      {contents && (
+        <Caption
+          dangerouslySetInnerHTML={{
+            __html: contents.replace(/#[\w]+/g, '<mark>$&</mark>'),
+          }}
+        />
+      )}
     </Container>
   );
 };
