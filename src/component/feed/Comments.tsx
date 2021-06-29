@@ -2,16 +2,10 @@ import { FC, memo } from 'react';
 import styled from 'styled-components';
 
 import { getFeeds_getFeeds_comments } from '../../__generated__/getFeeds';
-import { BoldText } from '../common';
+import Comment from './Comment';
 
 const Container = styled.div({
   marginTop: 20,
-});
-
-const Comment = styled.div({});
-
-const Caption = styled.span({
-  marginLeft: 10,
 });
 
 const CommentCount = styled.div({
@@ -36,18 +30,16 @@ const Comments: FC<IComments> = ({
 }) => {
   return (
     <Container>
-      <Comment>
-        <BoldText>{author}</BoldText>
-        <Caption>{caption}</Caption>
-      </Comment>
+      <Comment name={author} contents={caption} />
 
       <CommentCount>댓글 {numberOfComments} 개</CommentCount>
 
       {comments?.map(comment => (
-        <Comment key={comment?.id}>
-          <BoldText>{comment?.user.nickname}</BoldText>
-          <Caption>{comment?.comment}</Caption>
-        </Comment>
+        <Comment
+          key={comment?.id}
+          name={comment?.user.nickname}
+          contents={comment?.comment}
+        />
       ))}
     </Container>
   );
