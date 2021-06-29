@@ -1,6 +1,6 @@
-import { FC, memo } from 'react';
+import { FC, Fragment, memo } from 'react';
 import styled from 'styled-components';
-import sanitizeHtml from 'sanitize-html';
+import { Link } from 'react-router-dom';
 
 import { BoldText } from '../common';
 
@@ -9,7 +9,7 @@ const Container = styled.div({});
 const Caption = styled.span(({ theme }) => ({
   marginLeft: 10,
 
-  mark: {
+  a: {
     backgroundColor: 'inherit',
     color: theme.primary,
     cursor: 'pointer',
@@ -26,22 +26,21 @@ interface IComment {
 }
 
 const Comment: FC<IComment> = ({ name, contents }) => {
-  const sanitizedContents = sanitizeHtml(
-    contents?.replace(/#[\w]+/g, '<mark>$&</mark>') ?? '',
-    { allowedTags: ['mark'] }
-  );
-
   return (
     <Container>
       <BoldText>{name}</BoldText>
 
-      {sanitizedContents && (
-        <Caption
-          dangerouslySetInnerHTML={{
-            __html: sanitizedContents,
-          }}
-        />
-      )}
+      <Caption>
+        {contents?.split(' ').map((content, index) =>
+          /#[\w]+/g.test(content) ? (
+            <Fragment key={index}>
+              <Link to={`/hashtags/${content}`}>{content}</Link>{' '}
+            </Fragment>
+          ) : (
+            <Fragment key={index}>{content} </Fragment>
+          )
+        )}
+      </Caption>
     </Container>
   );
 };

@@ -12,4 +12,3 @@
 - Google Fonts: https://fonts.google.com/
 - React Helmet Async: https://www.npmjs.com/package/react-helmet-async
 - React Hook Form: https://react-hook-form.com/
-- Sanitize HTML: https://www.npmjs.com/package/sanitize-html
