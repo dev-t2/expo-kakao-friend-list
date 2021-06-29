@@ -15,13 +15,14 @@ import {
   toggleLikeVariables,
 } from '../../__generated__/toggleLike';
 import { Avatar, BoldText } from '../common';
+import Comments from './Comments';
 
 const PhotoContainer = styled.div(({ theme }) => ({
   maxWidth: 615,
   backgroundColor: theme.surface,
   border: `1px solid ${theme.border}`,
   borderRadius: 4,
-  marginBottom: 60,
+  marginBottom: 40,
 }));
 
 const PhotoHeader = styled.div(({ theme }) => ({
@@ -61,23 +62,6 @@ const PhotoAction = styled.div({
 const LikeCount = styled(BoldText)({
   display: 'block',
   marginTop: 15,
-});
-
-const Comments = styled.div({
-  marginTop: 20,
-});
-
-const Comment = styled.div({});
-
-const Caption = styled.span({
-  marginLeft: 10,
-});
-
-const CommentCount = styled.div({
-  opacity: 0.6,
-  fontSize: 12,
-  fontWeight: 600,
-  marginTop: 10,
 });
 
 const TOGGLE_LIKE_MUTATION = gql`
@@ -157,21 +141,12 @@ const Photo: FC<getFeeds_getFeeds> = ({
 
         <LikeCount>좋아요 {numberOfLikes} 개</LikeCount>
 
-        <Comments>
-          <Comment>
-            <BoldText>{user.nickname}</BoldText>
-            <Caption>{caption}</Caption>
-          </Comment>
-
-          <CommentCount>댓글 {numberOfComments} 개</CommentCount>
-
-          {comments?.map(comment => (
-            <Comment key={comment?.id}>
-              <BoldText>{comment?.user.nickname}</BoldText>
-              <Caption>{comment?.comment}</Caption>
-            </Comment>
-          ))}
-        </Comments>
+        <Comments
+          author={user.nickname}
+          caption={caption}
+          numberOfComments={numberOfComments}
+          comments={comments}
+        />
       </PhotoData>
     </PhotoContainer>
   );
