@@ -41,7 +41,9 @@ const App = () => {
               )}
 
               <Route path="/user/:nickname" exact>
-                <Profile />
+                <Layout>
+                  <Profile />
+                </Layout>
               </Route>
 
               <Route>
