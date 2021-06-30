@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { gql, useQuery } from '@apollo/client';
 
+import { COMMENT_FRAGMENT, PHOTO_FRAGMENT } from '../fragment';
 import { getFeeds } from '../__generated__/getFeeds';
 import { PageTitle } from '../component/common';
 import { Photo } from '../component/feed';
@@ -8,30 +9,22 @@ import { Photo } from '../component/feed';
 const GET_FEEDS_QUERY = gql`
   query getFeeds {
     getFeeds {
-      id
+      ...PhotoFragment
       user {
         nickname
         avatar
       }
-      photoUrl
       caption
-      numberOfLikes
-      numberOfComments
       comments {
-        id
-        user {
-          nickname
-          avatar
-        }
-        comment
-        isMine
-        createdAt
+        ...CommentFragment
       }
       isMine
-      isLiked
       createdAt
     }
   }
+
+  ${PHOTO_FRAGMENT}
+  ${COMMENT_FRAGMENT}
 `;
 
 const Home = () => {

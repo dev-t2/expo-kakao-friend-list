@@ -31,14 +31,14 @@ export interface getFeeds_getFeeds_comments {
 export interface getFeeds_getFeeds {
   __typename: "Photo";
   id: number;
-  user: getFeeds_getFeeds_user;
   photoUrl: string;
-  caption: string | null;
   numberOfLikes: number;
   numberOfComments: number;
+  isLiked: boolean;
+  user: getFeeds_getFeeds_user;
+  caption: string | null;
   comments: (getFeeds_getFeeds_comments | null)[] | null;
   isMine: boolean;
-  isLiked: boolean;
   createdAt: string;
 }
 
