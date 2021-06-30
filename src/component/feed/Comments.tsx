@@ -9,6 +9,7 @@ import {
   createCommentVariables,
 } from '../../__generated__/createComment';
 import Comment from './Comment';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div({
   marginTop: 20,
@@ -115,7 +116,9 @@ const Comments: FC<IComments> = ({
 
   return (
     <Container>
-      <Comment photoId={photoId} name={author} contents={caption} />
+      <Link to={`/user/${author}`}>
+        <Comment photoId={photoId} name={author} contents={caption} />
+      </Link>
 
       <CommentCount>댓글 {numberOfComments} 개</CommentCount>
 

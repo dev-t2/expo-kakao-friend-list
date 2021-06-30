@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useReactiveVar } from '@apollo/client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
-import { faCompass, faHome } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
 import { isLoggedInVar } from '../../apollo';
@@ -54,23 +53,19 @@ const Header = () => {
     <StyledHeader>
       <Container>
         <div>
-          <FontAwesomeIcon icon={faInstagram} size="2x" />
+          <Link to="/">
+            <FontAwesomeIcon icon={faInstagram} size="2x" />
+          </Link>
         </div>
 
         <div>
           {isLoggedIn ? (
             <IconContainer>
-              <Icon>
-                <FontAwesomeIcon icon={faHome} size="lg" />
-              </Icon>
-
-              <Icon>
-                <FontAwesomeIcon icon={faCompass} size="lg" />
-              </Icon>
-
-              <Icon>
-                <Avatar avatar={data?.me?.avatar} />
-              </Icon>
+              <Link to={`/user/${data?.me?.nickname}`}>
+                <Icon>
+                  <Avatar avatar={data?.me?.avatar} />
+                </Icon>
+              </Link>
             </IconContainer>
           ) : (
             <Link to={HOME}>

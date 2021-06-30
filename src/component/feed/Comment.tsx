@@ -73,7 +73,9 @@ const Comment: FC<IComment> = ({ photoId, id = 0, name, contents, isMine }) => {
 
   return (
     <Container>
-      <BoldText>{name}</BoldText>
+      <Link to={`/user/${name}`}>
+        <BoldText>{name}</BoldText>
+      </Link>
 
       <Caption>
         {contents?.split(' ').map((content, index) =>

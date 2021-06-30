@@ -1,11 +1,7 @@
 import { FC, memo, useCallback } from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faComment,
-  faHeart,
-  faPaperPlane,
-} from '@fortawesome/free-regular-svg-icons';
+import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as solidFaHeart } from '@fortawesome/free-solid-svg-icons';
 import { gql, useMutation } from '@apollo/client';
 
@@ -16,6 +12,7 @@ import {
 } from '../../__generated__/toggleLike';
 import { Avatar, BoldText } from '../common';
 import Comments from './Comments';
+import { Link } from 'react-router-dom';
 
 const PhotoContainer = styled.div(({ theme }) => ({
   maxWidth: 615,
@@ -114,8 +111,13 @@ const Photo: FC<IPhoto> = ({
   return (
     <PhotoContainer>
       <PhotoHeader>
-        <Avatar avatar={user.avatar} isLarge />
-        <Nickname>{user.nickname}</Nickname>
+        <Link to={`/user/${user.nickname}`}>
+          <Avatar avatar={user.avatar} isLarge />
+        </Link>
+
+        <Link to={`/user/${user.nickname}`}>
+          <Nickname>{user.nickname}</Nickname>
+        </Link>
       </PhotoHeader>
 
       <PhotoContents src={photoUrl} alt={`Feed ${id}`} />
@@ -127,12 +129,6 @@ const Photo: FC<IPhoto> = ({
               style={{ color: isLiked ? 'tomato' : 'inherit' }}
               icon={isLiked ? solidFaHeart : faHeart}
             />
-          </PhotoAction>
-          <PhotoAction>
-            <FontAwesomeIcon icon={faComment} />
-          </PhotoAction>
-          <PhotoAction>
-            <FontAwesomeIcon icon={faPaperPlane} />
           </PhotoAction>
         </PhotoActions>
 
