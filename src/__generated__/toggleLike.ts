@@ -14,7 +14,7 @@ export interface toggleLike_toggleLike {
 }
 
 export interface toggleLike {
-  toggleLike: toggleLike_toggleLike | null;
+  toggleLike: toggleLike_toggleLike;
 }
 
 export interface toggleLikeVariables {

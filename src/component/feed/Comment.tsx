@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 
 import { BoldText } from '../common';
 
-const Container = styled.div({});
+const Container = styled.div({
+  marginBottom: 10,
+});
 
 const Caption = styled.span(({ theme }) => ({
   marginLeft: 10,

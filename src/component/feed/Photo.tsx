@@ -9,7 +9,7 @@ import {
 import { faHeart as solidFaHeart } from '@fortawesome/free-solid-svg-icons';
 import { gql, useMutation } from '@apollo/client';
 
-import { getFeeds_getFeeds } from '../../__generated__/getFeeds';
+import { getFeeds_getFeeds as IPhoto } from '../../__generated__/getFeeds';
 import {
   toggleLike,
   toggleLikeVariables,
@@ -73,7 +73,7 @@ const TOGGLE_LIKE_MUTATION = gql`
   }
 `;
 
-const Photo: FC<getFeeds_getFeeds> = ({
+const Photo: FC<IPhoto> = ({
   id,
   user,
   photoUrl,
@@ -139,6 +139,7 @@ const Photo: FC<getFeeds_getFeeds> = ({
         <LikeCount>좋아요 {numberOfLikes} 개</LikeCount>
 
         <Comments
+          photoId={id}
           author={user.nickname}
           caption={caption}
           numberOfComments={numberOfComments}
