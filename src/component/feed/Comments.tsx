@@ -115,17 +115,22 @@ const Comments: FC<IComments> = ({
 
   return (
     <Container>
-      <Comment name={author} contents={caption} />
+      <Comment photoId={photoId} name={author} contents={caption} />
 
       <CommentCount>댓글 {numberOfComments} 개</CommentCount>
 
-      {comments?.map(comment => (
-        <Comment
-          key={comment?.id}
-          name={comment?.user.nickname}
-          contents={comment?.comment}
-        />
-      ))}
+      {comments?.map(comment => {
+        return comment ? (
+          <Comment
+            key={comment.id}
+            photoId={photoId}
+            id={comment.id}
+            name={comment.user.nickname}
+            contents={comment.comment}
+            isMine={comment.isMine}
+          />
+        ) : null;
+      })}
 
       <FormContainer>
         <form onSubmit={handleSubmit(onValid)}>

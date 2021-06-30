@@ -1,7 +1,12 @@
-import { FC, Fragment, memo } from 'react';
+import { FC, Fragment, memo, useCallback } from 'react';
 import styled from 'styled-components';
+import { gql, useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
 
+import {
+  deleteComment,
+  deleteCommentVariables,
+} from '../../__generated__/deleteComment';
 import { BoldText } from '../common';
 
 const Container = styled.div({
@@ -22,12 +27,50 @@ const Caption = styled.span(({ theme }) => ({
   },
 }));
 
+const DELETE_COMMENT_MUTATION = gql`
+  mutation deleteComment($id: Int!) {
+    deleteComment(id: $id) {
+      isSuccess
+      error
+    }
+  }
+`;
+
 interface IComment {
-  name?: string;
-  contents?: string | null;
+  photoId: number;
+  id?: number;
+  name: string;
+  contents: string | null;
+  isMine?: boolean;
 }
 
-const Comment: FC<IComment> = ({ name, contents }) => {
+const Comment: FC<IComment> = ({ photoId, id = 0, name, contents, isMine }) => {
+  const [deleteCommentMutation] = useMutation<
+    deleteComment,
+    deleteCommentVariables
+  >(DELETE_COMMENT_MUTATION, {
+    variables: { id },
+    update: (cache, { data }) => {
+      if (data?.deleteComment.isSuccess) {
+        cache.evict({ id: `Comment:${id}` });
+
+        cache.modify({
+          id: `Photo:${photoId}`,
+          fields: {
+            numberOfComments(prev) {
+              return prev - 1;
+            },
+            comments() {},
+          },
+        });
+      }
+    },
+  });
+
+  const onClick = useCallback(() => {
+    deleteCommentMutation();
+  }, [deleteCommentMutation]);
+
   return (
     <Container>
       <BoldText>{name}</BoldText>
@@ -43,6 +86,8 @@ const Comment: FC<IComment> = ({ name, contents }) => {
           )
         )}
       </Caption>
+
+      {isMine && <button onClick={onClick}>❌</button>}
     </Container>
   );
 };
