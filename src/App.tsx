@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { client, isDarkModeVar, isLoggedInVar } from './apollo';
 import { darkTheme, GlobalStyle, lightTheme } from './style';
 import { HOME, SIGNUP } from './route';
-import { Home, Login, NotFound, Signup } from './screen';
+import { Home, Login, NotFound, Profile, Signup } from './screen';
 import { Layout } from './component/common';
 
 const App = () => {
@@ -39,6 +39,10 @@ const App = () => {
                   <Signup />
                 </Route>
               )}
+
+              <Route path="/user/:nickname" exact>
+                <Profile />
+              </Route>
 
               <Route>
                 <NotFound />
