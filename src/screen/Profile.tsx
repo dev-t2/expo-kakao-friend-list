@@ -1,8 +1,9 @@
 import { memo } from 'react';
-import { gql } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 
 import { PHOTO_FRAGMENT } from '../fragment';
+import { getProfile, getProfileVariables } from '../__generated__/getProfile';
 
 const GET_PROFILE_QUERY = gql`
   query getProfile($nickname: String!) {
@@ -31,8 +32,12 @@ interface IParams {
 
 const Profile = () => {
   const { nickname } = useParams<IParams>();
+  const { data } = useQuery<getProfile, getProfileVariables>(
+    GET_PROFILE_QUERY,
+    { variables: { nickname } }
+  );
 
-  console.log(nickname);
+  console.log(data);
 
   return <div></div>;
 };
