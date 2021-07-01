@@ -1,12 +1,14 @@
 import { memo, useCallback } from 'react';
 import styled from 'styled-components';
-import { gql, useQuery } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons';
 
 import { PHOTO_FRAGMENT } from '../fragment';
 import { getProfile, getProfileVariables } from '../__generated__/getProfile';
+import { follow, followVariables } from '../__generated__/follow';
+import { unfollow, unfollowVariables } from '../__generated__/unfollow';
 import { BoldText, PageTitle } from '../component/common';
 
 const Header = styled.div({
@@ -138,30 +140,60 @@ const FOLLOW_MUTATION = gql`
   }
 `;
 
+const UNFOLLOW_MUTATION = gql`
+  mutation unfollow($nickname: String!) {
+    unfollow(nickname: $nickname) {
+      isSuccess
+      error
+    }
+  }
+`;
+
 interface IParams {
   nickname: string;
 }
 
 const Profile = () => {
   const { nickname } = useParams<IParams>();
+
   const { data, loading } = useQuery<getProfile, getProfileVariables>(
     GET_PROFILE_QUERY,
     { variables: { nickname } }
   );
 
-  const getButton = useCallback(getProfile => {
-    const { isMe, isFollowing } = getProfile;
+  const [follow] = useMutation<follow, followVariables>(FOLLOW_MUTATION, {
+    variables: { nickname },
+  });
 
-    if (isMe) {
-      return <ProfileButton>Edit Profile</ProfileButton>;
-    }
+  const [unfollow] = useMutation<unfollow, unfollowVariables>(
+    UNFOLLOW_MUTATION,
+    { variables: { nickname } }
+  );
 
-    if (isFollowing) {
-      return <ProfileButton>Unfollow</ProfileButton>;
-    }
+  const onFollow = useCallback(() => {
+    follow();
+  }, [follow]);
 
-    return <ProfileButton>Follow</ProfileButton>;
-  }, []);
+  const onUnfollow = useCallback(() => {
+    unfollow();
+  }, [unfollow]);
+
+  const getButton = useCallback(
+    getProfile => {
+      const { isMe, isFollowing } = getProfile;
+
+      if (isMe) {
+        return <ProfileButton>Edit Profile</ProfileButton>;
+      }
+
+      if (isFollowing) {
+        return <ProfileButton onClick={onUnfollow}>Unfollow</ProfileButton>;
+      }
+
+      return <ProfileButton onClick={onFollow}>Follow</ProfileButton>;
+    },
+    [onUnfollow, onFollow]
+  );
 
   return (
     <div>

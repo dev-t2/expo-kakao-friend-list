@@ -4,12 +4,14 @@ import { gql, useQuery, useReactiveVar } from '@apollo/client';
 import { isLoggedInVar, removeToken } from '../../apollo';
 import { me } from '../../__generated__/me';
 
-const ME_QUERY = gql`
+export const ME_QUERY = gql`
   query me {
     me {
       id
       nickname
       avatar
+      totalFollower
+      totalFollowing
     }
   }
 `;
