@@ -7,12 +7,12 @@ interface IStyledAvatar {
   isLarge?: boolean;
 }
 
-const StyledAvatar = styled.div<IStyledAvatar>(({ isLarge }) => ({
-  width: isLarge ? 30 : 25,
-  height: isLarge ? 30 : 25,
+const StyledAvatar = styled.div<IStyledAvatar>({
+  width: 30,
+  height: 30,
   borderRadius: '50%',
   overflow: 'hidden',
-}));
+});
 
 const StyledImg = styled.img({
   maxWidth: '100%',

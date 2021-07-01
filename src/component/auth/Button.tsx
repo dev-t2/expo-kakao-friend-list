@@ -6,16 +6,14 @@ interface IButton {
 }
 
 const Button = styled.button<IButton>(({ theme, disabled }) => ({
-  boxSizing: 'border-box',
   width: '100%',
   backgroundColor: theme.primary,
   color: 'white',
   textAlign: 'center',
   fontWeight: 600,
   border: 'none',
-  borderRadius: '4px',
-  padding: '8px',
-  marginTop: '10px',
+  borderRadius: 4,
+  padding: 8,
   opacity: disabled ? 0.4 : 1,
   cursor: 'pointer',
 }));

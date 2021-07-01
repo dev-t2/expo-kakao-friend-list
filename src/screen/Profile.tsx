@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 import styled from 'styled-components';
 import { gql, useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
@@ -23,6 +23,8 @@ const Avatar = styled.img(({ theme }) => ({
 }));
 
 const Row = styled.div({
+  display: 'flex',
+  alignItems: 'center',
   fontSize: 16,
   marginBottom: 20,
 });
@@ -31,6 +33,18 @@ const Nickname = styled.h3({
   fontSize: 28,
   fontWeight: 400,
 });
+
+const ProfileButton = styled.span(({ theme }) => ({
+  backgroundColor: theme.primary,
+  color: 'white',
+  textAlign: 'center',
+  fontWeight: 600,
+  border: 'none',
+  borderRadius: 4,
+  padding: 8,
+  cursor: 'pointer',
+  marginLeft: 10,
+}));
 
 const List = styled.ul({
   display: 'flex',
@@ -115,6 +129,15 @@ const GET_PROFILE_QUERY = gql`
   ${PHOTO_FRAGMENT}
 `;
 
+const FOLLOW_MUTATION = gql`
+  mutation follow($nickname: String!) {
+    follow(nickname: $nickname) {
+      isSuccess
+      error
+    }
+  }
+`;
+
 interface IParams {
   nickname: string;
 }
@@ -125,6 +148,20 @@ const Profile = () => {
     GET_PROFILE_QUERY,
     { variables: { nickname } }
   );
+
+  const getButton = useCallback(getProfile => {
+    const { isMe, isFollowing } = getProfile;
+
+    if (isMe) {
+      return <ProfileButton>Edit Profile</ProfileButton>;
+    }
+
+    if (isFollowing) {
+      return <ProfileButton>Unfollow</ProfileButton>;
+    }
+
+    return <ProfileButton>Follow</ProfileButton>;
+  }, []);
 
   return (
     <div>
@@ -140,19 +177,20 @@ const Profile = () => {
         <div>
           <Row>
             <Nickname>{data?.getProfile?.nickname}</Nickname>
+            {data?.getProfile && getButton(data?.getProfile)}
           </Row>
 
           <Row>
             <List>
               <Item>
                 <span>
-                  <Value>{data?.getProfile?.totalFollower}</Value>
+                  <Value>{data?.getProfile?.totalFollower}</Value> 팔로워
                 </span>
               </Item>
 
               <Item>
                 <span>
-                  <Value>{data?.getProfile?.totalFollowing}</Value>
+                  <Value>{data?.getProfile?.totalFollowing}</Value> 팔로잉
                 </span>
               </Item>
             </List>
