@@ -1,6 +1,6 @@
 import { memo, useCallback } from 'react';
 import styled from 'styled-components';
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { gql, useApolloClient, useMutation, useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment, faHeart } from '@fortawesome/free-solid-svg-icons';
@@ -10,6 +10,7 @@ import { getProfile, getProfileVariables } from '../__generated__/getProfile';
 import { follow, followVariables } from '../__generated__/follow';
 import { unfollow, unfollowVariables } from '../__generated__/unfollow';
 import { BoldText, PageTitle } from '../component/common';
+import { useUser } from '../component/hook';
 
 const Header = styled.div({
   display: 'flex',
@@ -155,6 +156,9 @@ interface IParams {
 
 const Profile = () => {
   const { nickname } = useParams<IParams>();
+  const loggedInUser = useUser();
+
+  const client = useApolloClient();
 
   const { data, loading } = useQuery<getProfile, getProfileVariables>(
     GET_PROFILE_QUERY,
@@ -163,11 +167,63 @@ const Profile = () => {
 
   const [follow] = useMutation<follow, followVariables>(FOLLOW_MUTATION, {
     variables: { nickname },
+    update: (cache, { data }) => {
+      if (!data?.follow.isSuccess) return;
+
+      cache.modify({
+        id: `User:${nickname}`,
+        fields: {
+          isFollowing() {
+            return true;
+          },
+          totalFollower(prev) {
+            return prev + 1;
+          },
+        },
+      });
+
+      cache.modify({
+        id: `User:${loggedInUser?.me?.nickname}`,
+        fields: {
+          totalFollowing(prev) {
+            return prev + 1;
+          },
+        },
+      });
+    },
   });
 
   const [unfollow] = useMutation<unfollow, unfollowVariables>(
     UNFOLLOW_MUTATION,
-    { variables: { nickname } }
+    {
+      variables: { nickname },
+      onCompleted: data => {
+        if (!data.unfollow.isSuccess) return;
+
+        const { cache } = client;
+
+        cache.modify({
+          id: `User:${nickname}`,
+          fields: {
+            isFollowing() {
+              return false;
+            },
+            totalFollower(prev) {
+              return prev - 1;
+            },
+          },
+        });
+
+        cache.modify({
+          id: `User:${loggedInUser?.me?.nickname}`,
+          fields: {
+            totalFollowing(prev) {
+              return prev - 1;
+            },
+          },
+        });
+      },
+    }
   );
 
   const onFollow = useCallback(() => {
