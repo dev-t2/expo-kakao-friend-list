@@ -5,12 +5,10 @@ import styled from '@emotion/native';
 
 import theme from './src/theme';
 
-const Container = styled.View({
+const Container = styled.View(({ theme }) => ({
   flex: 1,
-  backgroundColor: '#fff',
-  alignItems: 'center',
-  justifyContent: 'center',
-});
+  backgroundColor: theme.colors.white,
+}));
 
 const App = () => {
   return (

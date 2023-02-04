@@ -9,3 +9,4 @@
 - [Emotion](https://emotion.sh/docs/introduction)
   - [@emotion/native](https://emotion.sh/docs/@emotion/native)
   - [TypeScript](https://emotion.sh/docs/typescript)
+- [Faker](https://github.com/faker-js/faker)
