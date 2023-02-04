@@ -5,7 +5,8 @@ import { ThemeProvider } from '@emotion/react';
 import styled from '@emotion/native';
 
 import theme from './src/theme';
-import { Header } from './src/components';
+import { Header, Profile } from './src/components';
+import { myProfile } from './src/data';
 
 const Container = styled(SafeAreaView)(({ theme }) => ({
   flex: 1,
@@ -13,7 +14,7 @@ const Container = styled(SafeAreaView)(({ theme }) => ({
 }));
 
 const App = () => {
-  const edges = useMemo<Edge[]>(() => ['top'], []);
+  const edges = useMemo<Edge[]>(() => ['top', 'left', 'right'], []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -21,6 +22,8 @@ const App = () => {
         <StatusBar style="auto" />
 
         <Header />
+
+        <Profile {...myProfile} marginTop={10} />
       </Container>
     </ThemeProvider>
   );
