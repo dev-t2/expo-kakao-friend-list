@@ -6,7 +6,6 @@ interface IContainer {
 }
 
 const Container = styled.View<IContainer>(({ theme, marginTop }) => ({
-  width: '100%',
   height: 1,
   backgroundColor: theme.colors.gray[300],
   marginTop,

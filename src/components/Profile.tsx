@@ -31,7 +31,7 @@ const Name = styled.Text({
 const Introduction = styled.Text(({ theme }) => ({
   fontSize: 12,
   color: theme.colors.gray[500],
-  marginTop: 8,
+  marginTop: 4,
 }));
 
 interface IProfile extends IProfileData {
