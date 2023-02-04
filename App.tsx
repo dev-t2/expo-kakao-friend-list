@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { ThemeProvider } from '@emotion/react';
@@ -15,8 +15,10 @@ const Container = styled(SafeAreaView)(({ theme }) => ({
 }));
 
 const App = () => {
+  const [isOpened, setIsOpened] = useState(true);
+
   const onPress = useCallback(() => {
-    //
+    setIsOpened((prevState) => !prevState);
   }, []);
 
   return (
@@ -30,9 +32,14 @@ const App = () => {
 
         <Divider marginTop={16} />
 
-        <Section marginTop={10} length={friendProfiles.length} onPress={onPress} />
+        <Section
+          marginTop={10}
+          length={friendProfiles.length}
+          isOpened={isOpened}
+          onPress={onPress}
+        />
 
-        <List profiles={friendProfiles} />
+        {isOpened && <List profiles={friendProfiles} />}
       </Container>
     </ThemeProvider>
   );
