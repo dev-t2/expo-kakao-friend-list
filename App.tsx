@@ -1,24 +1,27 @@
-import { memo, useMemo } from 'react';
-import { Edge, SafeAreaView } from 'react-native-safe-area-context';
+import { memo, useCallback } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { ThemeProvider } from '@emotion/react';
 import styled from '@emotion/native';
 
 import theme from './src/theme';
-import { myProfile } from './src/data';
-import { Divider, Header, Profile } from './src/components';
+import { friendProfiles, myProfile } from './src/data';
+import { Divider, Header, List, Profile, Section } from './src/components';
 
 const Container = styled(SafeAreaView)(({ theme }) => ({
   flex: 1,
+  paddingHorizontal: 16,
   backgroundColor: theme.colors.white,
 }));
 
 const App = () => {
-  const edges = useMemo<Edge[]>(() => ['top', 'left', 'right'], []);
+  const onPress = useCallback(() => {
+    //
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
-      <Container edges={edges}>
+      <Container edges={['top', 'left', 'right']}>
         <StatusBar style="auto" />
 
         <Header />
@@ -26,6 +29,10 @@ const App = () => {
         <Profile {...myProfile} marginTop={10} />
 
         <Divider marginTop={16} />
+
+        <Section marginTop={10} length={friendProfiles.length} onPress={onPress} />
+
+        <List profiles={friendProfiles} />
       </Container>
     </ThemeProvider>
   );

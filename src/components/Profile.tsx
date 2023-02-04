@@ -1,4 +1,4 @@
-import { FC, memo, useMemo } from 'react';
+import { FC, memo } from 'react';
 import styled from '@emotion/native';
 
 import { IProfileData } from '../data';
@@ -39,11 +39,9 @@ interface IProfile extends IProfileData {
 }
 
 const Profile: FC<IProfile> = ({ marginTop, avatar, name, introduction }) => {
-  const source = useMemo(() => ({ uri: avatar }), [avatar]);
-
   return (
     <Container marginTop={marginTop}>
-      <Avatar source={source} />
+      <Avatar source={{ uri: avatar }} />
 
       <StyledView>
         <Name>{name}</Name>
