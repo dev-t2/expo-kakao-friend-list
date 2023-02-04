@@ -4,6 +4,7 @@ import { ThemeProvider } from '@emotion/react';
 import styled from '@emotion/native';
 
 import theme from './src/theme';
+import { Header } from './src/components';
 
 const Container = styled.View(({ theme }) => ({
   flex: 1,
@@ -15,6 +16,8 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Container>
         <StatusBar style="auto" />
+
+        <Header />
       </Container>
     </ThemeProvider>
   );
