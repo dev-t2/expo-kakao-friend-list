@@ -41,7 +41,7 @@ const TabBar = () => {
       <IconButton onPress={onPress(0)}>
         <Ionicons
           name={selectedTabIndex === 0 ? 'person' : 'person-outline'}
-          size={24}
+          size={22}
           color={theme.colors.black}
         />
       </IconButton>
@@ -49,7 +49,7 @@ const TabBar = () => {
       <IconButton onPress={onPress(1)}>
         <Ionicons
           name={selectedTabIndex === 1 ? 'chatbubble' : 'chatbubble-outline'}
-          size={24}
+          size={22}
           color={theme.colors.black}
         />
       </IconButton>
@@ -57,7 +57,7 @@ const TabBar = () => {
       <IconButton onPress={onPress(2)}>
         <Ionicons
           name={selectedTabIndex === 2 ? 'menu' : 'menu-outline'}
-          size={24}
+          size={22}
           color={theme.colors.black}
         />
       </IconButton>
@@ -65,7 +65,7 @@ const TabBar = () => {
       <IconButton onPress={onPress(3)}>
         <Ionicons
           name={selectedTabIndex === 3 ? 'ellipsis-horizontal' : 'ellipsis-horizontal-outline'}
-          size={24}
+          size={22}
           color={theme.colors.black}
         />
       </IconButton>

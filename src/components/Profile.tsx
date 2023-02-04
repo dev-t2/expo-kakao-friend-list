@@ -13,40 +13,57 @@ const Container = styled.View<IContainer>(({ marginTop }) => ({
   marginTop,
 }));
 
-const Avatar = styled.Image({
-  width: 50,
-  height: 50,
-  borderRadius: 20,
+interface IAvatar {
+  isMyProfile?: boolean;
+}
+
+const Avatar = styled.Image<IAvatar>(({ isMyProfile }) => {
+  const size = isMyProfile ? 50 : 40;
+
+  return {
+    width: size,
+    height: size,
+    borderRadius: size * 0.4,
+  };
 });
 
 const StyledView = styled.View({
   marginLeft: 10,
 });
 
-const Name = styled.Text({
-  fontSize: 16,
-  fontWeight: 'bold',
-});
+interface IName {
+  isMyProfile?: boolean;
+}
 
-const Introduction = styled.Text(({ theme }) => ({
-  fontSize: 12,
+const Name = styled.Text<IName>(({ isMyProfile }) => ({
+  fontSize: isMyProfile ? 16 : 14,
+  fontWeight: isMyProfile ? 'bold' : undefined,
+}));
+
+interface IIntroduction {
+  isMyProfile?: boolean;
+}
+
+const Introduction = styled.Text<IIntroduction>(({ theme, isMyProfile }) => ({
+  fontSize: isMyProfile ? 12 : 10,
   color: theme.colors.gray[500],
-  marginTop: 4,
+  marginTop: isMyProfile ? 4 : 2,
 }));
 
 interface IProfile extends IProfileData {
   marginTop?: number;
+  isMyProfile?: boolean;
 }
 
-const Profile: FC<IProfile> = ({ marginTop, avatar, name, introduction }) => {
+const Profile: FC<IProfile> = ({ marginTop, isMyProfile, avatar, name, introduction }) => {
   return (
     <Container marginTop={marginTop}>
-      <Avatar source={{ uri: avatar }} />
+      <Avatar isMyProfile={isMyProfile} source={{ uri: avatar }} />
 
       <StyledView>
-        <Name>{name}</Name>
+        <Name isMyProfile={isMyProfile}>{name}</Name>
 
-        <Introduction>{introduction}</Introduction>
+        {introduction && <Introduction isMyProfile={isMyProfile}>{introduction}</Introduction>}
       </StyledView>
     </Container>
   );

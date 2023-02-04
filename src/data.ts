@@ -17,7 +17,7 @@ export const myProfile: IProfileData = {
 export const friendProfiles: IProfileData[] = new Array(20).fill(null).map(() => {
   const avatar = faker.image.avatar();
   const name = `${faker.name.lastName()}${faker.name.firstName()}`;
-  const introduction = faker.lorem.words(Math.random() * 6);
+  const introduction = faker.lorem.words(Math.floor(Math.random() * 6));
 
   return { avatar, name, introduction };
 });

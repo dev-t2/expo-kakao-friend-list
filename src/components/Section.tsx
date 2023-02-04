@@ -2,6 +2,7 @@ import { FC, memo, useMemo } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/native';
+import { Pressable } from 'react-native';
 
 interface IContainer {
   marginTop?: number;
@@ -14,10 +15,9 @@ const Container = styled.View<IContainer>(({ marginTop }) => ({
 }));
 
 const Title = styled.Text(({ theme }) => ({
+  fontSize: 12,
   color: theme.colors.gray[500],
 }));
-
-const IconButton = styled.Pressable({});
 
 interface ISection {
   marginTop?: number;
@@ -35,9 +35,9 @@ const Section: FC<ISection> = ({ marginTop, length, isOpened, onPress }) => {
     <Container marginTop={marginTop}>
       <Title>친구 {length}</Title>
 
-      <IconButton onPress={onPress}>
-        <MaterialIcons name={name} size={24} color={theme.colors.gray[300]} />
-      </IconButton>
+      <Pressable onPress={onPress}>
+        <MaterialIcons name={name} size={16} color={theme.colors.gray[500]} />
+      </Pressable>
     </Container>
   );
 };
