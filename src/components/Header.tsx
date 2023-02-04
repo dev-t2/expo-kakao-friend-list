@@ -34,20 +34,20 @@ const Header = () => {
       <Title>친구</Title>
 
       <IconContainer>
-        <IconButton>
-          <Ionicons name="search-outline" size={20} color={theme.colors.black} />
+        <IconButton hitSlop={10}>
+          <Ionicons name="search-outline" size={18} color={theme.colors.black} />
         </IconButton>
 
-        <IconButton>
-          <Ionicons name="person-add-outline" size={20} color={theme.colors.black} />
+        <IconButton hitSlop={10}>
+          <Ionicons name="person-add-outline" size={18} color={theme.colors.black} />
         </IconButton>
 
-        <IconButton>
-          <Ionicons name="musical-note-outline" size={20} color={theme.colors.black} />
+        <IconButton hitSlop={10}>
+          <Ionicons name="musical-note-outline" size={18} color={theme.colors.black} />
         </IconButton>
 
-        <IconButton>
-          <Ionicons name="settings-outline" size={20} color={theme.colors.black} />
+        <IconButton hitSlop={10}>
+          <Ionicons name="settings-outline" size={18} color={theme.colors.black} />
         </IconButton>
       </IconContainer>
     </Container>

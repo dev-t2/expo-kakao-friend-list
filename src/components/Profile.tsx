@@ -46,8 +46,9 @@ interface IIntroduction {
 
 const Introduction = styled.Text<IIntroduction>(({ theme, isMyProfile }) => ({
   fontSize: isMyProfile ? 12 : 10,
+  fontWeight: '400',
   color: theme.colors.gray[500],
-  marginTop: isMyProfile ? 4 : 2,
+  marginTop: isMyProfile ? 2 : 0,
 }));
 
 interface IProfile extends IProfileData {

@@ -19,7 +19,7 @@ const IconButton = styled.Pressable({
   flex: 1,
   justifyContent: 'center',
   alignItems: 'center',
-  paddingVertical: 10,
+  paddingVertical: 12,
 });
 
 const TabBar = () => {
@@ -38,34 +38,34 @@ const TabBar = () => {
 
   return (
     <Container paddingBottom={bottom}>
-      <IconButton onPress={onPress(0)}>
+      <IconButton hitSlop={10} onPress={onPress(0)}>
         <Ionicons
           name={selectedTabIndex === 0 ? 'person' : 'person-outline'}
-          size={22}
+          size={20}
           color={theme.colors.black}
         />
       </IconButton>
 
-      <IconButton onPress={onPress(1)}>
+      <IconButton hitSlop={10} onPress={onPress(1)}>
         <Ionicons
           name={selectedTabIndex === 1 ? 'chatbubble' : 'chatbubble-outline'}
-          size={22}
+          size={20}
           color={theme.colors.black}
         />
       </IconButton>
 
-      <IconButton onPress={onPress(2)}>
+      <IconButton hitSlop={10} onPress={onPress(2)}>
         <Ionicons
           name={selectedTabIndex === 2 ? 'menu' : 'menu-outline'}
-          size={22}
+          size={20}
           color={theme.colors.black}
         />
       </IconButton>
 
-      <IconButton onPress={onPress(3)}>
+      <IconButton hitSlop={10} onPress={onPress(3)}>
         <Ionicons
           name={selectedTabIndex === 3 ? 'ellipsis-horizontal' : 'ellipsis-horizontal-outline'}
-          size={22}
+          size={20}
           color={theme.colors.black}
         />
       </IconButton>
