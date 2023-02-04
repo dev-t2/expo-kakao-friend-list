@@ -5,8 +5,8 @@ import { ThemeProvider } from '@emotion/react';
 import styled from '@emotion/native';
 
 import theme from './src/theme';
-import { Header, Profile } from './src/components';
 import { myProfile } from './src/data';
+import { Divider, Header, Profile } from './src/components';
 
 const Container = styled(SafeAreaView)(({ theme }) => ({
   flex: 1,
@@ -24,6 +24,8 @@ const App = () => {
         <Header />
 
         <Profile {...myProfile} marginTop={10} />
+
+        <Divider marginTop={16} />
       </Container>
     </ThemeProvider>
   );

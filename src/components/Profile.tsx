@@ -30,7 +30,7 @@ const Name = styled.Text({
 
 const Introduction = styled.Text(({ theme }) => ({
   fontSize: 12,
-  color: theme.colors.gray,
+  color: theme.colors.gray[500],
   marginTop: 8,
 }));
 
